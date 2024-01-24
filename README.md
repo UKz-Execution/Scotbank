@@ -9,5 +9,3 @@ Welcome to your-bank!!
 ## building
 
     ./mvnw.cmd clean package
-
-test
