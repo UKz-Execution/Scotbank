@@ -1,14 +1,15 @@
 package uk.co.asepstrath.bank;
 
 public class Account {
+    private double balance;
 
-
-    public void deposit(int amount) {
+    public void deposit(double amount) {
+        balance = balance + amount;
 
     }
 
-    public int getBalance() {
-        return 0;
+    public double getBalance() {
+        return balance;
     }
 
 }
