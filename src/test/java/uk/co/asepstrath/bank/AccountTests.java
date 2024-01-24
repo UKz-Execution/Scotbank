@@ -22,7 +22,7 @@ public class AccountTests {
         Account a = new Account();
         a.deposit(20);
         Assertions.assertEquals(20, a.getBalance());
-        a.deposit(70);
+        a.deposit(50);
         Assertions.assertEquals(70, a.getBalance());
     }
 }
