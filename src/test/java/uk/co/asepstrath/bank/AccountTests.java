@@ -25,4 +25,12 @@ public class AccountTests {
         a.deposit(50);
         Assertions.assertEquals(70, a.getBalance());
     }
+
+    @Test
+    public void withdraw(){
+        Account a = new Account();
+        a.deposit(40);
+        a.withdraw(20);
+        Assertions.assertEquals(20, a.getBalance());
+    }
 }
