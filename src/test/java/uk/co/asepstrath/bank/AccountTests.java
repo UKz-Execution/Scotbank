@@ -11,6 +11,11 @@ public class AccountTests {
         Assertions.assertTrue(a != null);
     }
 
+    @Test
+    public void newAccount(){
+        Account a = new Account();
+        Assertions.assertTrue(a.getBalance() == 0);
+    }
 // blah blah blah
 //Pink frogs
 }
