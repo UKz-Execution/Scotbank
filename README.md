@@ -1,6 +1,6 @@
-# Your-Bank
+# Scot-Bank
 
-Welcome to your-bank!!
+Welcome to Scot-bank!!
 
 ## running
 
