@@ -11,13 +11,13 @@ public class AccountTests {
         Assertions.assertNotNull(a);
     }
 
-    @Test
+    @Test //Test 1
     public void newAccount(){
         Account a = new Account();
         Assertions.assertEquals(0, a.getBalance());
     }
 
-    @Test
+    @Test //Test 2
     public void addFunds(){
         Account a = new Account();
         a.deposit(20);
@@ -26,7 +26,7 @@ public class AccountTests {
         Assertions.assertEquals(70, a.getBalance());
     }
 
-    @Test
+    @Test //Test 3
     public void withdraw(){
         Account a = new Account();
         a.deposit(40);
@@ -34,10 +34,25 @@ public class AccountTests {
         Assertions.assertEquals(20, a.getBalance());
     }
 
-    @Test
+    @Test //Test 4
     public void overdraft(){
         Account a = new Account();
-        a.deposit(30);
+        a.deposit(30); //Starting balance
         Assertions.assertFalse(a.withdraw(100));
+    }
+
+    @Test //Test 5
+    public void mulDeposit(){
+        Account a = new Account();
+        a.deposit(20); //Starting balance
+        a.deposit(10);
+        a.deposit(10);
+        a.deposit(10);
+        a.deposit(10);
+        a.deposit(10);
+        a.withdraw(20);
+        a.withdraw(20);
+        a.withdraw(20);
+        Assertions.assertEquals(10,a.getBalance());
     }
 }
