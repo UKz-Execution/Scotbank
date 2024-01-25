@@ -33,4 +33,11 @@ public class AccountTests {
         a.withdraw(20);
         Assertions.assertEquals(20, a.getBalance());
     }
+
+    @Test
+    public void overdraft(){
+        Account a = new Account();
+        a.deposit(30);
+        Assertions.assertFalse(a.withdraw(100));
+    }
 }
