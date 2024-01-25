@@ -6,11 +6,11 @@ public class Account {
     private BigDecimal balance = new BigDecimal(0);
 
     public void deposit (double amount) {
-        this.withdraw(BigDecimal.valueOf(amount));
+        this.deposit(BigDecimal.valueOf(amount));
     }
 
     public void withdraw (double amount) {
-        this.deposit(BigDecimal.valueOf(amount));
+        this.withdraw(BigDecimal.valueOf(amount));
     }
 
 
@@ -18,13 +18,13 @@ public class Account {
             balance = balance.add(amount);
     }
 
-    public boolean withdraw(BigDecimal amount){
-        if ((amount.doubleValue() > 0) | (balance.compareTo(amount) < 0)) {
+    public void withdraw(BigDecimal amount) {
+        if ((amount.doubleValue() < 0) | (balance.compareTo(amount) < 0)) {
+            throw new ArithmeticException();
+        }
             balance = balance.subtract(amount);
-            return true;
-        } else
-            return false;
-    }
+        }
+
 
     public BigDecimal getBalance() {
         return balance;
