@@ -1,22 +1,32 @@
 package uk.co.asepstrath.bank;
 
+import java.math.BigDecimal;
+
 public class Account {
-    private double balance;
+    private BigDecimal balance = new BigDecimal(0);
 
-    public void deposit(double amount) {
-        balance = balance + amount;
-
+    public void deposit (double amount) {
+        this.withdraw(BigDecimal.valueOf(amount));
     }
 
-    public boolean withdraw(double amount){
-        if (balance >= amount) {
-            balance = balance - amount;
+    public void withdraw (double amount) {
+        this.deposit(BigDecimal.valueOf(amount));
+    }
+
+
+    public void deposit(BigDecimal amount) {
+            balance = balance.add(amount);
+    }
+
+    public boolean withdraw(BigDecimal amount){
+        if ((amount.doubleValue() > 0) | (balance.compareTo(amount) < 0)) {
+            balance = balance.subtract(amount);
             return true;
         } else
             return false;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
