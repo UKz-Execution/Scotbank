@@ -4,6 +4,16 @@ import java.math.BigDecimal;
 
 public class Account {
     private BigDecimal balance = new BigDecimal(0);
+    private String accName;
+
+    public Account() {
+        accName = "";
+    }
+
+    public Account(String name, BigDecimal bal) {
+        accName = name;
+        balance = bal;
+    }
 
     public void deposit (double amount) {
         this.deposit(BigDecimal.valueOf(amount));
@@ -12,7 +22,6 @@ public class Account {
     public void withdraw (double amount) {
         this.withdraw(BigDecimal.valueOf(amount));
     }
-
 
     public void deposit(BigDecimal amount) {
             balance = balance.add(amount);
@@ -25,9 +34,12 @@ public class Account {
             balance = balance.subtract(amount);
         }
 
-
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public String getAccName() {
+        return accName;
     }
 
 }

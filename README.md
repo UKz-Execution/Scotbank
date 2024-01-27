@@ -24,7 +24,7 @@ Welcome to Scot-bank!!
 - [x] Test 6: Taking Care of the Pennies
 
 ### Task 3: Populating a Dataset
-- [ ] Account data added?
+- [x] Account data added?
 
 ### Task 4: Exposing Data via an Endpoint
 - [ ] Account data endpoint created?
