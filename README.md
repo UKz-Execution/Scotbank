@@ -27,9 +27,9 @@ Welcome to Scot-bank!!
 - [x] Account data added?
 
 ### Task 4: Exposing Data via an Endpoint
-- [ ] Account data endpoint created?
-- [ ] .toString() method overridden in Account?
-- [ ] Tests written?
+- [x] Account data endpoint created?
+- [x] .toString() method overridden in Account?
+- [x] Tests written?
 
 ### Task 5: Commit your Changes
 - [ ] All changes committed?
