@@ -32,4 +32,4 @@ Welcome to Scot-bank!!
 - [x] Tests written?
 
 ### Task 5: Commit your Changes
-- [ ] All changes committed?
+- [x] All changes committed?
