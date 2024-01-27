@@ -66,4 +66,10 @@ public class AccountTests {
         Assertions.assertEquals(a.getBalance().compareTo(BigDecimal.valueOf(23.01)),0);
 
     }
+
+    @Test //Test for task 4
+    public void exposeData(){
+        Account a = new Account("John", new BigDecimal("102.80"));
+        Assertions.assertEquals(a.toString(), "Name: John, Balance: 102.80");
+    }
 }

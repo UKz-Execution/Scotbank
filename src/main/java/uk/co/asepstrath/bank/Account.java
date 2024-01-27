@@ -42,4 +42,9 @@ public class Account {
         return accName;
     }
 
+    @Override
+    public String toString() {
+        return "Name: " + accName + ", Balance: " + balance;
+    }
+
 }
