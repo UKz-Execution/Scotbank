@@ -72,4 +72,5 @@ public class AccountTests {
         Account a = new Account("John", new BigDecimal("102.80"));
         Assertions.assertEquals(a.toString(), "Name: John, Balance: 102.80");
     }
+
 }
