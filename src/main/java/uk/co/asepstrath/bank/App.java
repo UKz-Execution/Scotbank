@@ -8,11 +8,15 @@ import io.jooby.hikari.HikariModule;
 import org.slf4j.Logger;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class App extends Jooby {
+
+    private ArrayList<Account> accountData;
 
     {
         /*
@@ -55,6 +59,16 @@ public class App extends Jooby {
     public void onStart() {
         Logger log = getLog();
         log.info("Starting Up...");
+
+        // Task 3 - Populating a Dataset. This function will be replaced by API later!
+        accountData = new ArrayList<Account>();
+        accountData.add(new Account("Rachel", new BigDecimal("50.00")));
+        accountData.add(new Account("Monica", new BigDecimal("100.00")));
+        accountData.add(new Account("Phoebe", new BigDecimal("76.00")));
+        accountData.add(new Account("Joey", new BigDecimal("23.90")));
+        accountData.add(new Account("Chandler", new BigDecimal("3.00")));
+        accountData.add(new Account("Ross", new BigDecimal("54.32")));
+
 
         // Fetch DB Source
         DataSource ds = require(DataSource.class);
