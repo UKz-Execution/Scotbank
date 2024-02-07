@@ -116,11 +116,10 @@ public class ExampleController {
 
     @GET("/testinghandle")
     public ModelAndView testHandle() {
-        // we must create a model to pass to the "dice" template
         Map<String, Object> model = new HashMap<>();
-        model.put("name:", "Ted");
+        model.put("name", "Ted");
 
-        return new ModelAndView("index.html", model);
+        return new ModelAndView("index.hbs", model);
     }
 
     /*
