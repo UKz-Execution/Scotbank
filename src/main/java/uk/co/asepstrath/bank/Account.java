@@ -3,16 +3,24 @@ package uk.co.asepstrath.bank;
 import java.math.BigDecimal;
 
 public class Account {
+
+    public String id;
+    public String name;
+    public BigDecimal startingBalance;
+
+    public boolean roundUpEnabled;
     private BigDecimal balance = new BigDecimal(0);
-    private String accName;
 
     public Account() {
-        accName = "";
+        name = "";
     }
 
-    public Account(String name, BigDecimal bal) {
-        accName = name;
-        balance = bal;
+    public Account(String id, String name, int startingBalance, boolean roundUpEnabled) {
+        this.id = id;
+        this.name = name;
+        this.startingBalance = BigDecimal.valueOf(startingBalance);
+        this.balance = BigDecimal.valueOf(startingBalance);
+        this.roundUpEnabled = roundUpEnabled;
     }
 
     public void deposit (double amount) {
@@ -39,12 +47,28 @@ public class Account {
     }
 
     public String getAccName() {
-        return accName;
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public BigDecimal getStartingBalance() {
+        return startingBalance;
+    }
+
+    public boolean isRoundUpEnabled() {
+        return roundUpEnabled;
     }
 
     @Override
     public String toString() {
-        return "Name: " + accName + ", Balance: " + balance;
+        return "Name: " + name + ", Balance: " + balance;
     }
 
 }
