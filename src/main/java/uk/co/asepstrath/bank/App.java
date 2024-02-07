@@ -31,6 +31,7 @@ public class App extends Jooby {
         For example in the dice template (dice.hbs) it references "assets/dice.png" which is in resources/assets folder
          */
         assets("/assets/*", "/assets");
+        assets("/views/*", "/views");
         assets("/service_worker.js","/service_worker.js");
 
         /*
@@ -60,7 +61,10 @@ public class App extends Jooby {
         Logger log = getLog();
         log.info("Starting Up...");
 
-        // Task 3 - Populating a Dataset. This function will be replaced by API later!
+        // Fetch DB Source
+        DataSource ds = require(DataSource.class);
+
+        /* Task 3 - Populating a Dataset. This function will be replaced by API later!
         accountData = new ArrayList<Account>();
         accountData.add(new Account("Rachel", new BigDecimal("50.00")));
         accountData.add(new Account("Monica", new BigDecimal("100.00")));
@@ -68,19 +72,22 @@ public class App extends Jooby {
         accountData.add(new Account("Joey", new BigDecimal("23.90")));
         accountData.add(new Account("Chandler", new BigDecimal("3.00")));
         accountData.add(new Account("Ross", new BigDecimal("54.32")));
+        */
 
 
-        // Fetch DB Source
-        DataSource ds = require(DataSource.class);
+
         // Open Connection to DB
         try (Connection connection = ds.getConnection()) {
             //
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("CREATE TABLE `Example` (`Key` varchar(255),`Value` varchar(255))");
+            stmt.executeUpdate("CREATE TABLE `Account Details` (`Key` varchar(255),`Value` varchar(255))");
             stmt.executeUpdate("INSERT INTO Example " + "VALUES ('WelcomeMessage', 'Welcome to A Bank')");
+
         } catch (SQLException e) {
             log.error("Database Creation Error",e);
         }
+
+
     }
 
     /*
