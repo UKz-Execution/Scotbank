@@ -9,9 +9,7 @@ import org.slf4j.Logger;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class App extends Jooby {
@@ -32,7 +30,7 @@ public class App extends Jooby {
          */
         assets("/assets/*", "/assets");
         assets("/views/*", "/views");
-        assets("/service_worker.js","/service_worker.js");
+        assets("/service_worker.js", "/service_worker.js");
 
         /*
         Now we set up our controllers and their dependencies
@@ -40,7 +38,7 @@ public class App extends Jooby {
         DataSource ds = require(DataSource.class);
         Logger log = getLog();
 
-        mvc(new ExampleController(ds,log));
+        mvc(new ExampleController(ds, log));
 
         /*
         Finally we register our application lifecycle methods
@@ -61,10 +59,8 @@ public class App extends Jooby {
         Logger log = getLog();
         log.info("Starting Up...");
 
-        // Fetch DB Source
-        DataSource ds = require(DataSource.class);
-
-        /* Task 3 - Populating a Dataset. This function will be replaced by API later!
+        // Task 3 - Populating a Dataset. This function will be replaced by API later!
+        /*
         accountData = new ArrayList<Account>();
         accountData.add(new Account("Rachel", new BigDecimal("50.00")));
         accountData.add(new Account("Monica", new BigDecimal("100.00")));
@@ -74,27 +70,55 @@ public class App extends Jooby {
         accountData.add(new Account("Ross", new BigDecimal("54.32")));
         */
 
+        // Fetch DB Source
+        DataSource db = require(DataSource.class);
+
+        try (Connection connection = db.getConnection()) {
+            Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS employees (\n"
+                    + " id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,\n"
+                    + " name text NOT NULL,\n"
+                    + " phone integer NOT NULL,\n"
+                    + " salary decimal NOT NULL);");
 
 
-        // Open Connection to DB
-        try (Connection connection = ds.getConnection()) {
-            //
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("CREATE TABLE `Account Details` (`Key` varchar(255),`Value` varchar(255))");
-            stmt.executeUpdate("INSERT INTO Example " + "VALUES ('WelcomeMessage', 'Welcome to A Bank')");
+
+            PreparedStatement prep = connection.prepareStatement(
+                    "INSERT INTO employees (name, phone, salary) "
+                            + "VALUES (?,?,?)");
+            prep.setString(1, "Bob");
+            prep.setInt(2, 666666666);
+            prep.setDouble(3, 35000.00);
+            prep.executeUpdate();
+
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM employees");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnNumber = rsmd.getColumnCount();
+            while (rs.next()){
+                System.out.println("");
+                for (int i = 1; i <= columnNumber ; i++) {
+                    if (i > 1) System.out.println("-----");
+                    String columnValue = rs.getString(i);
+                    System.out.println(rsmd.getColumnName(i) + " -> " + columnValue );
+                }
+                System.out.println("");
+
+            }
+            rs.close();
+
+
 
         } catch (SQLException e) {
-            log.error("Database Creation Error",e);
+            log.error("Database Creation Error", e);
         }
-
-
     }
 
     /*
     This function will be called when the application shuts down
      */
-    public void onStop() {
-        System.out.println("Shutting Down...");
+        public void onStop() {
+            System.out.println("Shutting Down...");
+        }
     }
-
-}
