@@ -1,5 +1,6 @@
 package uk.co.asepstrath.bank;
 
+import uk.co.asepstrath.bank.database.DatabaseAPI;
 import uk.co.asepstrath.bank.example.ExampleController;
 import io.jooby.Jooby;
 import io.jooby.handlebars.HandlebarsModule;
@@ -13,6 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class App extends Jooby {
+
 
     private ArrayList<Account> accountData;
 
@@ -72,6 +74,7 @@ public class App extends Jooby {
 
         // Fetch DB Source
         DataSource db = require(DataSource.class);
+        DatabaseAPI.initDatabase(db);
 
         try (Connection connection = db.getConnection()) {
             Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
