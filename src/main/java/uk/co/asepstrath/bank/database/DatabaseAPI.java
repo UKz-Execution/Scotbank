@@ -21,9 +21,13 @@ public class DatabaseAPI extends Account{
         db = src;
     }
 
-    public void openConnection() {
+    public void openConnection() { // Unsure if this method is needed, leaving it just in case
         if (db == null) {
             throw new RuntimeException("Unable to connect to database, app has not started.");
+        }
+        try (java.sql.Connection connection = db.getConnection()) {
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -32,7 +36,8 @@ public class DatabaseAPI extends Account{
              PreparedStatement statement = conn.prepareStatement(
                      "INSERT INTO accounts (id, name, balance) VALUES (?, ?, ?)")) {
             statement.setString(1, String.valueOf(account.getId()));
-            statement.setBigDecimal(2, account.getBalance());
+            statement.setString(2, account.getName());
+            statement.setBigDecimal(3, account.getBalance());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,5 +90,15 @@ public class DatabaseAPI extends Account{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void updateName(UUID id, String name) { // Updates name according to account id
+        try (Connection conn = db.getConnection();
+             PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET name = ? WHERE id = ?")) {
+            statement.setString(1, name);
+            statement.setString(2, String.valueOf(id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
