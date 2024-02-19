@@ -1,12 +1,6 @@
 package uk.co.asepstrath.bank.database;
 
 import uk.co.asepstrath.bank.Account;
-import uk.co.asepstrath.bank.example.ExampleController;
-import io.jooby.Jooby;
-import io.jooby.handlebars.HandlebarsModule;
-import io.jooby.helper.UniRestExtension;
-import io.jooby.hikari.HikariModule;
-import org.slf4j.Logger;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -24,10 +18,6 @@ public class DatabaseAPI extends Account{
     public void openConnection() { // Unsure if this method is needed, leaving it just in case
         if (db == null) {
             throw new RuntimeException("Unable to connect to database, app has not started.");
-        }
-        try (java.sql.Connection connection = db.getConnection()) {
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
@@ -96,6 +86,16 @@ public class DatabaseAPI extends Account{
         try (Connection conn = db.getConnection();
              PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET name = ? WHERE id = ?")) {
             statement.setString(1, name);
+            statement.setString(2, String.valueOf(id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateBalance(UUID id, BigDecimal balance) { // Updates balance according to account id
+        try (Connection conn = db.getConnection();
+             PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE id = ?")) {
+            statement.setBigDecimal(1, balance);
             statement.setString(2, String.valueOf(id));
         } catch (SQLException e) {
             e.printStackTrace();
