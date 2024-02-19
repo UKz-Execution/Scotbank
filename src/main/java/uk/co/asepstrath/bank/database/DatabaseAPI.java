@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DatabaseAPI extends Account{
     private static DataSource db = null;
@@ -30,7 +31,7 @@ public class DatabaseAPI extends Account{
         try (Connection conn = db.getConnection();
              PreparedStatement statement = conn.prepareStatement(
                      "INSERT INTO accounts (id, name, balance) VALUES (?, ?, ?)")) {
-            statement.setString(1, account.getId());
+            statement.setString(1, String.valueOf(account.getId()));
             statement.setBigDecimal(2, account.getBalance());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -44,7 +45,7 @@ public class DatabaseAPI extends Account{
              Statement statement = conn.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts")) {
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                UUID id = UUID.fromString(resultSet.getString("id"));
                 int balance = resultSet.getInt("balance");
                 accounts.add(new Account(id, name, balance, roundUpEnabled));
             }
@@ -54,10 +55,10 @@ public class DatabaseAPI extends Account{
         return accounts;
     }
 
-    public Account getAccountById(String id) { // Fetches account by id
+    public Account getAccountById(UUID id) { // Fetches account by id
         try (Connection conn = db.getConnection();
              PreparedStatement statement = conn.prepareStatement("SELECT * FROM accounts WHERE account_number = ?")) {
-            statement.setString(1, id);
+            statement.setString(1, String.valueOf(id));
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     int balance = resultSet.getInt("balance");
