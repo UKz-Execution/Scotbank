@@ -1,10 +1,11 @@
 package uk.co.asepstrath.bank;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class Account {
 
-    public String id;
+    public UUID id;
     public String name;
     public BigDecimal startingBalance;
 
@@ -15,10 +16,18 @@ public class Account {
         name = "";
     }
 
-    public Account(String id, String name, int startingBalance, boolean roundUpEnabled) {
-        this.id = id;
-        this.name = name;
+    public Account( UUID id, String name, int startingBalance, boolean roundUpEnabled) {
+        try {
+            this.id = id;
+            this.name = name;
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage() + "ID or Name cannot be Null.");
+        }
+        if (startingBalance < 0) {
+            throw new ArithmeticException();
+    } else {
         this.startingBalance = BigDecimal.valueOf(startingBalance);
+    }
         this.balance = BigDecimal.valueOf(startingBalance);
         this.roundUpEnabled = roundUpEnabled;
     }
@@ -50,7 +59,7 @@ public class Account {
         return name;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

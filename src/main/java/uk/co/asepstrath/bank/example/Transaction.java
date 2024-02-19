@@ -2,20 +2,21 @@ package uk.co.asepstrath.bank.example;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 public class Transaction {
     public Date timestamp;
-    public String id;
+    public UUID id;
     public String type;
     public BigDecimal amount;
     public String to;
     public String from;
 
-    public Transaction (Date timestamp, String id, String type, int amount, String to, String from) {
+    public Transaction (Date timestamp, UUID id, String type, int amount, String to, String from) {
         this.timestamp = timestamp;
         this.id = id;
         this.type = type;
-        this.amount = BigDecimal.valueOf((long)amount);
+        this.amount = BigDecimal.valueOf(amount);
         this.to = to;
         this.from = from;
     }
@@ -23,7 +24,7 @@ public class Transaction {
     public Date getTimestamp() {
         return timestamp;
     }
-    public String getId() {
+    public UUID getId() {
         return id;
     }
     public String getType() {
