@@ -16,7 +16,7 @@ public class Account {
         name = "";
     }
 
-    public Account( UUID id, String name, int startingBalance, boolean roundUpEnabled) {
+    public Account( UUID id, String name, double startingBalance, boolean roundUpEnabled) {
         try {
             this.id = id;
             this.name = name;

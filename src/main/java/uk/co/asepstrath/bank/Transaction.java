@@ -1,4 +1,4 @@
-package uk.co.asepstrath.bank.example;
+package uk.co.asepstrath.bank;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Transaction {
     public String to;
     public String from;
 
-    public Transaction (Date timestamp, UUID id, String type, int amount, String to, String from) {
+    public Transaction (Date timestamp, UUID id, String type, double amount, String to, String from) {
         this.timestamp = timestamp;
         this.id = id;
         this.type = type;
