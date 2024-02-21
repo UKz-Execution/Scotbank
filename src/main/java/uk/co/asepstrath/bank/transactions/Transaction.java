@@ -12,7 +12,7 @@ public class Transaction {
     public String from;
 
 
-    public Transaction (LocalDateTime timestamp, UUID id, String type, int amount, String to, String from) {
+    public Transaction (LocalDateTime timestamp, UUID id, String type, double amount, String to, String from) {
 
         this.timestamp = timestamp;
         this.id = id;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
+import uk.co.asepstrath.bank.transactions.Transaction;
 
 import java.math.BigDecimal;
 import java.util.Date;
