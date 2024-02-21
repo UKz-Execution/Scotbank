@@ -1,104 +1,121 @@
 package uk.co.asepstrath.bank.database;
 
-import uk.co.asepstrath.bank.Account;
+import uk.co.asepstrath.bank.accounts.Account;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class DatabaseAPI extends Account{
+public class DatabaseAPI implements AutoCloseable {
     private static DataSource db = null;
 
-    public static void initDatabase(DataSource src) {
+    private final Connection conn;
+
+    public static void initDatabase(DataSource src) throws Exception {
         db = src;
+        try (DatabaseAPI conn = open()) {
+            conn.initialiseDatabase();
+        }
     }
 
-    public void openConnection() { // Unsure if this method is needed, leaving it just in case
+    private DatabaseAPI(Connection conn) {
+        this.conn = conn;
+    }
+
+    public static DatabaseAPI open() { // Unsure if this method is needed, leaving it just in case
         if (db == null) {
             throw new RuntimeException("Unable to connect to database, app has not started.");
         }
-    }
 
-    public static void storeAccount(Account account) { // Stores an account in the database
-        try (Connection conn = db.getConnection();
-             PreparedStatement statement = conn.prepareStatement(
-                     "INSERT INTO accounts (id, name, balance) VALUES (?, ?, ?)")) {
-            statement.setString(1, String.valueOf(account.getId()));
-            statement.setString(2, account.getName());
-            statement.setBigDecimal(3, account.getBalance());
-            statement.executeUpdate();
+        try {
+            Connection connection = db.getConnection();
+            return new DatabaseAPI(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public List<Account> getAllAccounts() { // Fetches all accounts stored in database
-        List<Account> accounts = new ArrayList<>();
-        try (Connection conn = db.getConnection();
-             Statement statement = conn.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts")) {
-            while (resultSet.next()) {
-                UUID id = UUID.fromString(resultSet.getString("id"));
-                int balance = resultSet.getInt("balance");
-                accounts.add(new Account(id, name, balance, roundUpEnabled));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    @Override
+    public void close() throws Exception {
+        conn.close();
+    }
+
+    private void initialiseDatabase() throws SQLException {
+//        Statement dropTable = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+//                ResultSet.CONCUR_UPDATABLE);
+//        int r = dropTable.executeUpdate("DROP TABLE IF EXISTS accounts;");
+
+        Statement createTable = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        createTable.executeUpdate("""
+                CREATE TABLE IF NOT EXISTS accounts (
+                 id varchar(36) NOT NULL,
+                 name text NOT NULL,
+                 startingBalance decimal NOT NULL,
+                 balance decimal NOT NULL,
+                 roundUpEnabled boolean NOT NULL);""");
+    }
+
+    public void createAccount(Account account) throws SQLException { // Stores an account in the database
+        String sql = "INSERT INTO accounts (id, name, startingBalance, balance, roundUpEnabled) VALUES (?,?,?,?,?)";
+        PreparedStatement prep = conn.prepareStatement(sql);
+        prep.setString(1, account.getId().toString());
+        prep.setString(2, account.getName());
+        prep.setBigDecimal(3, account.getStartingBalance());
+        prep.setBigDecimal(4, account.getBalance());
+        prep.setBoolean(5, account.isRoundUpEnabled());
+        prep.executeUpdate();
+    }
+
+    public void updateAccountName(Account account) throws SQLException {
+        updateAccountName(account.getId(), account.getName());
+    }
+
+    public void updateAccountName(UUID id, String name) throws SQLException { // Updates name according to account id
+        PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET name = ? WHERE id = ?");
+        statement.setString(1, name);
+        statement.setString(2, id.toString());
+        statement.executeUpdate();
+    }
+
+    public void updateAccountBalance(Account account) throws SQLException {
+        updateAccountBalance(account.getId(), account.getBalance());
+    }
+
+    public void updateAccountBalance(UUID id, BigDecimal balance) throws SQLException { // Updates balance according to account id
+        PreparedStatement statement = conn.prepareStatement(
+                "UPDATE accounts SET balance = ? WHERE id = ?;");
+        statement.setBigDecimal(1, balance);
+        statement.setString(2, id.toString());
+        statement.executeUpdate();
+    }
+
+    public ArrayList<Account> getAllAccounts() throws SQLException { // Fetches all accounts stored in database
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM accounts");
+        return getAccountsFromResult(resultSet);
+    }
+
+    public Account getAccountById(UUID id) throws SQLException { // Fetches account by id
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM accounts WHERE id = ?");
+        statement.setString(1, id.toString());
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Account> accountData = getAccountsFromResult(resultSet);
+        if (accountData.size() != 1) return null;
+        return accountData.get(0);
+    }
+
+    private ArrayList<Account> getAccountsFromResult(ResultSet resultSet) throws SQLException {
+        ArrayList<Account> accounts = new ArrayList<>();
+        while (resultSet.next()) {
+            UUID id = UUID.fromString(resultSet.getString("id"));
+            String name = resultSet.getString("name");
+            BigDecimal startingBalance = resultSet.getBigDecimal("startingBalance");
+            BigDecimal balance = resultSet.getBigDecimal("balance");
+            boolean roundUpEnabled = resultSet.getBoolean("roundUpEnabled");
+            accounts.add(new Account(id, name, startingBalance, balance, roundUpEnabled));
         }
         return accounts;
-    }
-
-    public Account getAccountById(UUID id) { // Fetches account by id
-        try (Connection conn = db.getConnection();
-             PreparedStatement statement = conn.prepareStatement("SELECT * FROM accounts WHERE account_number = ?")) {
-            statement.setString(1, String.valueOf(id));
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int balance = resultSet.getInt("balance");
-                    return new Account(id, name, balance, roundUpEnabled);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Account getAccountByName(String name) { // Fetches account by name
-        try (Connection conn = db.getConnection();
-             PreparedStatement statement = conn.prepareStatement("SELECT * FROM accounts WHERE name = ?")) {
-            statement.setString(1, name);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int balance = resultSet.getInt("balance");
-                    return new Account(id, name, balance, roundUpEnabled);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void updateName(UUID id, String name) { // Updates name according to account id
-        try (Connection conn = db.getConnection();
-             PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET name = ? WHERE id = ?")) {
-            statement.setString(1, name);
-            statement.setString(2, String.valueOf(id));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void updateBalance(UUID id, BigDecimal balance) { // Updates balance according to account id
-        try (Connection conn = db.getConnection();
-             PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET balance = ? WHERE id = ?")) {
-            statement.setBigDecimal(1, balance);
-            statement.setString(2, String.valueOf(id));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

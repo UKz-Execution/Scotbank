@@ -3,6 +3,7 @@ package uk.co.asepstrath.bank;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.co.asepstrath.bank.accounts.Account;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package uk.co.asepstrath.bank.example;
+package uk.co.asepstrath.bank.transactions;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;

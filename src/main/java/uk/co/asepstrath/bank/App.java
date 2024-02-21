@@ -1,5 +1,7 @@
 package uk.co.asepstrath.bank;
 
+import uk.co.asepstrath.bank.accounts.Account;
+import uk.co.asepstrath.bank.accounts.AccountsAPI;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 import uk.co.asepstrath.bank.example.ExampleController;
 import io.jooby.Jooby;
@@ -14,7 +16,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class App extends Jooby {
-
 
     private ArrayList<Account> accountData;
 
@@ -45,8 +46,8 @@ public class App extends Jooby {
         /*
         Finally we register our application lifecycle methods
          */
-        onStarted(() -> onStart());
-        onStop(() -> onStop());
+        onStarted(this::onStart);
+        onStop(this::onStop);
     }
 
     public static void main(final String[] args) {
@@ -57,7 +58,7 @@ public class App extends Jooby {
     This function will be called when the application starts up,
     it should be used to ensure that the DB is properly setup
      */
-    public void onStart() {
+    public void onStart() throws Exception {
         Logger log = getLog();
         log.info("Starting Up...");
 
@@ -76,10 +77,10 @@ public class App extends Jooby {
         DataSource db = require(DataSource.class);
         DatabaseAPI.initDatabase(db);
 
-        try (Connection connection = db.getConnection()) {
-            Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+//        try (Connection connection = db.getConnection()) {
+            /*Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS employees (\n"
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (\n"
                     + " id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,\n"
                     + " name text NOT NULL,\n"
                     + " phone integer NOT NULL,\n"
@@ -88,15 +89,16 @@ public class App extends Jooby {
 
 
             PreparedStatement prep = connection.prepareStatement(
-                    "INSERT INTO employees (name, phone, salary) "
+                    "INSERT INTO accounts (name, phone, salary) "
                             + "VALUES (?,?,?)");
             prep.setString(1, "Bob");
             prep.setInt(2, 666666666);
             prep.setDouble(3, 35000.00);
             prep.executeUpdate();
 
+            AccountsAPI.loadData(connection, log);
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM employees");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnNumber = rsmd.getColumnCount();
             while (rs.next()){
@@ -109,13 +111,12 @@ public class App extends Jooby {
                 System.out.println("");
 
             }
-            rs.close();
-
-
-
-        } catch (SQLException e) {
-            log.error("Database Creation Error", e);
-        }
+            rs.close();*/
+//
+//        } catch (SQLException e) {
+//            log.error("Database Creation Error", e);
+//        }
+        AccountsAPI.loadData(log);
     }
 
     /*
