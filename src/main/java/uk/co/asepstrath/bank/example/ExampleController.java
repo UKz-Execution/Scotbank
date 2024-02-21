@@ -122,6 +122,25 @@ public class ExampleController {
         return new ModelAndView("index.hbs", model);
     }
 
+    @GET("/home")
+    public ModelAndView homePage(){
+
+        String userName = "John Doe";
+        String checkingAccountNumber = "123456789";
+        double checkingBalance = 1500.50;
+        String savingsAccountNumber = "987654321";
+        double savingsBalance = 5000.75;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("userName", userName);
+        model.put("checkingAccountNumber", checkingAccountNumber);
+        model.put("checkingBalance", checkingBalance);
+        model.put("savingsAccountNumber", savingsAccountNumber);
+        model.put("savingsBalance", savingsBalance);
+
+        return new ModelAndView("home.hbs", model);
+    }
+
     /*
     The @POST annotation registers this function as a HTTP POST handler.
     It will look at the body of the POST request and try to deserialise into a MyMessage object
