@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('textureImg.jpg') center/cover fixed no-repeat; /* Replace 'your-background-image.jpg' with the actual image path */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /*filter: blur(10px);*/
+}
+
+.container {
+    display: flex;
+    max-width: 800px; /* Adjust the maximum width as needed */
+    width: 100%;
+    background-color: rgba(52, 73, 94, 0.8); /* Background color for the containers with opacity */
+    border-radius: 0;
+    overflow: hidden; /* Ensures the background image does not overflow the container */
+}
+
+.form-container,
+.info-container {
+    flex: 1;
+    padding: 40px;
+    text-align: center;
+    height: 250px;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    font-size: 18px;
+}
+
+.info-container {
+    flex: 2;
+    background-color: #ecf0f1; /* Light gray background for information */
+}
+
+
+h2 {
+    color: #3498db; /* Blue */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #3498db; /* Blue */
+    border-radius: 4px;
+}
+
+button {
+    background-color: #3498db; /* Blue */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #2980b9; /* Darker Blue */
+}
+
+.username-label{
+    color: #3498db;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
