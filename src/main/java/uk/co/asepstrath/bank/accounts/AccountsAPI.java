@@ -1,13 +1,10 @@
 package uk.co.asepstrath.bank.accounts;
 
-import kong.unirest.core.GenericType;
-import kong.unirest.core.HttpResponse;
 import kong.unirest.core.Unirest;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 import java.sql.*;
-import java.util.List;
 
 public class AccountsAPI {
 
@@ -21,6 +18,7 @@ public class AccountsAPI {
         try (DatabaseAPI connection = DatabaseAPI.open()) {
 
             for (Account account : accountResponse) {
+                account.balance = account.startingBalance;
                 connection.createAccount(account);
                 logger.info("Account created: {name: " + account.getName() + ", startingBalance: " + account.getStartingBalance());
             }

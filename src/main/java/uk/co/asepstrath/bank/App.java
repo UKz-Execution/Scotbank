@@ -62,60 +62,9 @@ public class App extends Jooby {
         Logger log = getLog();
         log.info("Starting Up...");
 
-        // Task 3 - Populating a Dataset. This function will be replaced by API later!
-        /*
-        accountData = new ArrayList<Account>();
-        accountData.add(new Account("Rachel", new BigDecimal("50.00")));
-        accountData.add(new Account("Monica", new BigDecimal("100.00")));
-        accountData.add(new Account("Phoebe", new BigDecimal("76.00")));
-        accountData.add(new Account("Joey", new BigDecimal("23.90")));
-        accountData.add(new Account("Chandler", new BigDecimal("3.00")));
-        accountData.add(new Account("Ross", new BigDecimal("54.32")));
-        */
-
         // Fetch DB Source
         DataSource db = require(DataSource.class);
         DatabaseAPI.initDatabase(db);
-
-//        try (Connection connection = db.getConnection()) {
-            /*Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS accounts (\n"
-                    + " id integer NOT NULL PRIMARY KEY AUTO_INCREMENT,\n"
-                    + " name text NOT NULL,\n"
-                    + " phone integer NOT NULL,\n"
-                    + " salary decimal NOT NULL);");
-
-
-
-            PreparedStatement prep = connection.prepareStatement(
-                    "INSERT INTO accounts (name, phone, salary) "
-                            + "VALUES (?,?,?)");
-            prep.setString(1, "Bob");
-            prep.setInt(2, 666666666);
-            prep.setDouble(3, 35000.00);
-            prep.executeUpdate();
-
-            AccountsAPI.loadData(connection, log);
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM accounts");
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnNumber = rsmd.getColumnCount();
-            while (rs.next()){
-                System.out.println("");
-                for (int i = 1; i <= columnNumber ; i++) {
-                    if (i > 1) System.out.println("-----");
-                    String columnValue = rs.getString(i);
-                    System.out.println(rsmd.getColumnName(i) + " -> " + columnValue );
-                }
-                System.out.println("");
-
-            }
-            rs.close();*/
-//
-//        } catch (SQLException e) {
-//            log.error("Database Creation Error", e);
-//        }
         AccountsAPI.loadData(log);
     }
 
