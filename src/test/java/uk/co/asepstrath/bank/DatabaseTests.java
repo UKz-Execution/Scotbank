@@ -1,16 +1,13 @@
 package uk.co.asepstrath.bank;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 import javax.sql.DataSource;
 import io.jooby.Jooby;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -33,9 +30,17 @@ public class DatabaseTests extends Jooby{
     }
 
     @Test
-    void testUpdateBalance() throws SQLException {
+    void testUpdateBalance() throws SQLException { // Check balance updates correctly via id
         db.updateAccountBalance(id, BigDecimal.valueOf(50.0));
         Account a  = db.getAccountById(id);
         Assertions.assertEquals(BigDecimal.valueOf(50.0), a.getBalance());
+    }
+
+    @Test
+    void testCreateAccount() throws SQLException { // Check account creation
+        UUID id = UUID.randomUUID();
+        Account temp = new Account(id, "Charlie Higgins", 50.0, false);
+        db.createAccount(temp);
+        Assertions.assertNotNull(db.getAccountById(id));
     }
 }
