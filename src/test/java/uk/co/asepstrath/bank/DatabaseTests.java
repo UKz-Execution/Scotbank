@@ -43,4 +43,9 @@ public class DatabaseTests extends Jooby{
         db.createAccount(temp);
         Assertions.assertNotNull(db.getAccountById(id));
     }
+
+    @Test
+    void testGetAllAccounts() throws SQLException { // Checks get all accounts is not null
+        Assertions.assertNotNull(db.getAllAccounts());
+    }
 }
