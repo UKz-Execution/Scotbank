@@ -21,27 +21,30 @@ public class BusinessesAPI {
     }
 
         private static List<Business> parseCsvData (String csvData) {
-            try (CSVReader csvReader = new CSVReaderBuilder(new StringReader(csvData)).build()) {
-                List<Business> businessList = new ArrayList<>();
+            try (CSVReader csvReader = new CSVReader(new StringReader(csvData))) {
 
-                csvReader.readNext();
+                ArrayList<Business> businessList = new ArrayList<>();
 
                 String[] nextLine;
 
+                csvReader.readNext();
+
+
                 while((nextLine = csvReader.readNext()) != null) {
-                    Business business = new Business();
+                    String id = nextLine[0];
+                    String name = nextLine[1];
+                    String category = nextLine[2];
+                    String sanctioned = nextLine[3];
 
-                    for (int i = 0; i < nextLine.length; i++) {
-
-
+                    businessList.add(new Business(id,name,category,sanctioned));
                     }
-                    businessList.add(business);
-                }
                 return businessList;
+
         } catch (CsvValidationException | IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         }
 }
+
+
+

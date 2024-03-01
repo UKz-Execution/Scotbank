@@ -5,7 +5,7 @@ public class Business {
     public String id;
     public String name;
     public String category;
-    public Boolean sanctioned;
+    public String sanctioned;
 
 
     public Business() {
@@ -13,7 +13,7 @@ public class Business {
     }
 
 
-    public Business(String id, String name, String category, Boolean sanctioned) {
+    public Business(String id, String name, String category, String sanctioned) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -33,7 +33,7 @@ public class Business {
         return category;
     }
 
-    public Boolean getSanctioned() {
+    public String getSanctioned() {
         return sanctioned;
     }
 
@@ -49,7 +49,7 @@ public class Business {
         this.category = category;
     }
 
-    public void setSanctioned(Boolean sanctioned) {
+    public void setSanctioned(String sanctioned) {
         this.sanctioned = sanctioned;
     }
 }
