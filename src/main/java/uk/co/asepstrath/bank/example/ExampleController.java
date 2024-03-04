@@ -139,7 +139,8 @@ public class ExampleController {
         return new ModelAndView("home.hbs", model);
     }
 
-    @GET ModelAndView accountPage(){
+    @GET("/account")
+    public ModelAndView accountPage(){
 
         String userName = "Joe Bloggs";
         String checkingAccountNumber = "192837465";
