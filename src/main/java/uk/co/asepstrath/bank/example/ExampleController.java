@@ -140,8 +140,19 @@ public class ExampleController {
     }
 
     @GET ModelAndView accountPage(){
-        Map<String, Object> model = new HashMap<>();
 
+        String userName = "Joe Bloggs";
+        String checkingAccountNumber = "192837465";
+        double checkingBalance = 2500.50;
+        String savingsAccountNumber = "918273645";
+        double savingsBalance = 3000.75;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("userName", userName);
+        model.put("checkingAccountNumber", checkingAccountNumber);
+        model.put("checkingBalance", checkingBalance);
+        model.put("savingsAccountNumber", savingsAccountNumber);
+        model.put("savingsBalance", savingsBalance);
         return new ModelAndView("account.hbs", model);
     }
 

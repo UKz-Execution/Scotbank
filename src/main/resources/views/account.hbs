@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/styles.css">
-    <title>ScotBank - Account</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Scotbank - Account</title>
 </head>
 
 <body>
-<div class="container">
-    <div class="form-container">
-       <!-- <h2>Scotbank</h2>-->
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit">Login</button>
-        </form>
+    <div class="container">
+        <div class="info-container">
+            <h2>Welcome, {{username}}</h2>
+            <div>
+                <h3>Account Overview:</h3>
+                <p>Checking account number: {{checkingAccountNumber}}</p>
+                <p>Checking account balance: {{checkingBalance}}</p>
+                <p>Savings account number: {{savingsAccountNumber}}</p>
+                <p>Savings account balance: {{savingsBalance}}</p>
+            </div>
+        </div>
     </div>
-
-    <div class="info-container">
-        <!-- Add information about the bank here -->
-        <h3>Welcome to Scotbank</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
-    </div>
-</div>
 </body>
 
 </html>
