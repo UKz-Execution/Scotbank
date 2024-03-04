@@ -139,6 +139,12 @@ public class ExampleController {
         return new ModelAndView("home.hbs", model);
     }
 
+    @GET ModelAndView accountPage(){
+        Map<String, Object> model = new HashMap<>();
+
+        return new ModelAndView("account.hbs", model);
+    }
+
     /*
     The @POST annotation registers this function as a HTTP POST handler.
     It will look at the body of the POST request and try to deserialise into a MyMessage object
