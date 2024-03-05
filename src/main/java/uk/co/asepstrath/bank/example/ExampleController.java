@@ -8,6 +8,7 @@ import kong.unirest.core.Unirest;
 import org.slf4j.Logger;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -142,19 +143,35 @@ public class ExampleController {
     @GET("/account")
     public ModelAndView accountPage(){
 
-        String userName = "Joe Bloggs";
+        String username = "Joe Bloggs";
         String checkingAccountNumber = "192837465";
-        double checkingBalance = 2500.50;
+        BigDecimal checkingBalance = BigDecimal.valueOf(2500.50);
         String savingsAccountNumber = "918273645";
-        double savingsBalance = 3000.75;
+        BigDecimal savingsBalance = BigDecimal.valueOf(3000.75);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("userName", userName);
+        model.put("username", username);
         model.put("checkingAccountNumber", checkingAccountNumber);
         model.put("checkingBalance", checkingBalance);
         model.put("savingsAccountNumber", savingsAccountNumber);
         model.put("savingsBalance", savingsBalance);
         return new ModelAndView("account.hbs", model);
+    }
+
+    @GET("/spending")
+    public ModelAndView spendingPage(){
+
+        double totalMoneyIn = 4500.50;
+        double totalMoneyOut = 3200.75;
+        double monthMoneyIn = 1780.90;
+        double monthMoneyOut = 1487.20;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalMoneyIn", totalMoneyIn);
+        model.put("totalMoneyOut", totalMoneyOut);
+        model.put("monthMoneyIn", monthMoneyIn);
+        model.put("monthMoneyOut", monthMoneyOut);
+        return new ModelAndView("spending.hbs", model);
     }
 
     /*
