@@ -139,6 +139,11 @@ public class ExampleController {
         return new ModelAndView("home.hbs", model);
     }
 
+    @POST("/home")
+    public void homePagePost(@FormParam String username, @FormParam String password) {
+        logger.info("Username found: " + username + "\nPassword: " + password);
+    }
+
     /*
     The @POST annotation registers this function as a HTTP POST handler.
     It will look at the body of the POST request and try to deserialise into a MyMessage object
