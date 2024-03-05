@@ -78,3 +78,54 @@ button:hover {
     font-size: 12px;
     margin-bottom: 8px;
 }
+
+.header{
+    background-color: #ffffff;
+    margin: 20px;
+
+}
+
+a{
+    color: #3498db;
+}
+
+a:hover {
+    color: #0b0e75;
+    background-color: transparent;
+    text-decoration: underline;
+
+}
+
+ul {
+    position: fixed;
+    top: 0;
+    right:0;
+    left:0;
+    width: 100%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 40px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: #0b0e75;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    /*background-color: #3498db;*/
+    border-color: blue;
+}
