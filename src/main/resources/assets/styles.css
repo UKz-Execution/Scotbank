@@ -46,6 +46,11 @@ h2 {
     color: #3498db; /* Blue */
 }
 
+h3,
+p {
+    text-align: left;
+}
+
 label {
     display: block;
     margin-bottom: 8px;

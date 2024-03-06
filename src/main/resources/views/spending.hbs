@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>Scotbank - Spending Summary</title>
+</head>
+
+<body>
+
+    <div class = "header">
+    <ul>
+            <li><a href="http://localhost:8080/example/account">Account</a></li>
+
+
+
+        <li> <a href="http://localhost:8080/example/transaction">Transactions</a></li>
+
+
+
+        <li>  <a href="http://localhost:8080/example/spending">Spending Summary</a></li>
+    </ul>
+    </div>
+
+    <div class="container">
+        <div class="info-container">
+            <h2>Spending Summary</h2>
+            <div>
+                <h3>All time:</h3>
+                <p>Money in: {{totalMoneyIn}}</p>
+                <p>Money out: {{totalMoneyOut}}</p>
+            </div>
+            <div>
+                <h3>Last Month:</h3>
+                <p>Money in: {{monthMoneyIn}}</p>
+                <p>Money out: {{monthMoneyOut}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
