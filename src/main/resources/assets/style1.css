@@ -78,7 +78,10 @@ body {
 .info-container {
     flex: 2;
     background-color: #ecf0f1;
+    height: 250px;
+    display: flex;
 }
+
 
 h2 {
     color: #3498db;
@@ -163,20 +166,77 @@ li a {
 }
 
 li a:hover {
+    /*background-color: #3498db;*/
     border-color: blue;
 }
 
-#login-link {
-    float: right;
-    margin-right: 20px;
+
+
+.topnav {
+    background-color: #1d2a48;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    height: 50px;
+    padding-bottom: 5px;
+    position: fixed;
+    top: 0; /* Align to the top */
+    z-index: 1000;
 }
 
-#even{
-    color: #1d2a47;
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
 }
 
 .logo {
     margin-top: 5px;
     height: 45px;
     margin-right: 20px;
+}
+
+#home-link {
+    float: right;
+    margin-right: 20px;
+}
+
+#Uname{
+    color: black;
+}
+
+.buttons-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    clear: left;
+    width: 200px;
+}
+
+.action-button {
+    margin-bottom: 10px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-button:hover {
+    background-color: #2980b9;
+}
+
+.overview{
+    float:right;
+    margin-bottom:20px;
 }
