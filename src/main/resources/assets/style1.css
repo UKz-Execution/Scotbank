@@ -78,10 +78,7 @@ body {
 .info-container {
     flex: 2;
     background-color: #ecf0f1;
-    height: 250px;
-    display: flex;
 }
-
 
 h2 {
     color: #3498db;
@@ -166,36 +163,16 @@ li a {
 }
 
 li a:hover {
-    /*background-color: #3498db;*/
     border-color: blue;
 }
 
-
-
-.topnav {
-    background-color: #1d2a48;
-    overflow: hidden;
-    width: 100%;
-    margin-top: 20px;
-    height: 50px;
-    padding-bottom: 5px;
-    position: fixed;
-    top: 0; /* Align to the top */
-    z-index: 1000;
+#login-link {
+    float: right;
+    margin-right: 20px;
 }
 
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
+#even{
+    color: #1d2a47;
 }
 
 .logo {
@@ -203,6 +180,7 @@ li a:hover {
     height: 45px;
     margin-right: 20px;
 }
+
 
 #home-link {
     float: right;
@@ -240,3 +218,5 @@ li a:hover {
     float:right;
     margin-bottom:20px;
 }
+
+
