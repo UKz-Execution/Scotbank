@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class TransactionsAPI {
             DocumentBuilder doc_build = doc_build_factory.newDocumentBuilder();
             Document doc = doc_build.parse(new InputSource(url.openStream()));
             doc.getDocumentElement().normalize();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             nodeList = doc.getElementsByTagName("results");
 
@@ -38,7 +40,7 @@ public class TransactionsAPI {
                     switch (node.getNodeName()) {
                         case "timestamp":
                             if (node.getFirstChild() != null)
-                                transaction.setTimestamp(LocalDateTime.parse(node.getFirstChild().getNodeValue()));
+                                transaction.setTimestamp(LocalDateTime.parse(node.getFirstChild().getNodeValue(), formatter));
                             break;
                         case "amount":
                             if (node.getFirstChild() != null)
