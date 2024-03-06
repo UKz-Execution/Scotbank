@@ -10,30 +10,33 @@
 
 <body>
 
-    <div class = "header">
-    <ul>
-            <li><a href="http://localhost:8080/example/account">Account</a></li>
-
-
-
-        <li> <a href="http://localhost:8080/example/transaction">Transactions</a></li>
-
-
-
-        <li>  <a href="http://localhost:8080/example/spending">Spending Summary</a></li>
-    </ul>
-    </div>
+<div class="topnav">
+    <a href="home#welcome">Welcome</a>
+    <a href="home#services">Our Services</a>
+    <a href="home#about">About Us</a>
+    <a href="home#contact">Contact Us</a>
+    <img src="/assets/ScotBankImg.png" alt="ScotBank Logo" class="logo">
+    <a href="http://localhost:8080/example/home" id = "home-link">Home</a>
+</div>
 
     <div class="container">
         <div class="info-container">
-            <h2>Welcome, {{username}}</h2>
-            <div>
+            <h2 id = "welcome">Welcome, {{username}}</h2>
+
+            <div class="buttons-section">
+                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/example/account';" >Account</button>
+                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/example/transaction';" >Transactions</button>
+                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/example/spending';" >Spending Summary</button>
+            </div>
+
+            <div class= "overview">
                 <h3>Account Overview:</h3>
                 <p>Checking account number: {{checkingAccountNumber}}</p>
                 <p>Checking account balance: {{checkingBalance}}</p>
                 <p>Savings account number: {{savingsAccountNumber}}</p>
                 <p>Savings account balance: {{savingsBalance}}</p>
             </div>
+
         </div>
     </div>
 </body>

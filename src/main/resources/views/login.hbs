@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>ScotBank Login</title>
+</head>
+
+<body>
+
+<div class="topnav">
+    <a href="home#welcome">Welcome</a>
+    <a href="home#services">Our Services</a>
+    <a href="home#about">About Us</a>
+    <a href="home#contact">Contact Us</a>
+    <img src="/assets/ScotBankImg.png" alt="ScotBank Logo" class="logo">
+    <a href="http://localhost:8080/example/home" id = "home-link">Home</a>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <!-- <h2>Scotbank</h2>-->
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" onclick = "window.location.href='http://localhost:8080/example/account';" >Login
+            </button>
+        </form>
+    </div>
+
+    <div class="info-container">
+        <!-- Add information about the bank here -->
+        <h3>Welcome to Scotbank</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ...</p>
+    </div>
+</div>
+</body>
+
+</html>

@@ -139,17 +139,36 @@ public class ExampleController {
         return new ModelAndView("home.hbs", model);
     }
 
+    @GET("/login")
+    public ModelAndView loginPage(){
+
+        String userName = "John Doe";
+        String checkingAccountNumber = "123456789";
+        double checkingBalance = 1500.50;
+        String savingsAccountNumber = "987654321";
+        double savingsBalance = 5000.75;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("userName", userName);
+        model.put("checkingAccountNumber", checkingAccountNumber);
+        model.put("checkingBalance", checkingBalance);
+        model.put("savingsAccountNumber", savingsAccountNumber);
+        model.put("savingsBalance", savingsBalance);
+
+        return new ModelAndView("login.hbs", model);
+    }
+
     @GET("/account")
     public ModelAndView accountPage(){
 
-        String userName = "Joe Bloggs";
+        String username = "Joe Bloggs";
         String checkingAccountNumber = "192837465";
         double checkingBalance = 2500.50;
         String savingsAccountNumber = "918273645";
         double savingsBalance = 3000.75;
 
         Map<String, Object> model = new HashMap<>();
-        model.put("userName", userName);
+        model.put("username", username);
         model.put("checkingAccountNumber", checkingAccountNumber);
         model.put("checkingBalance", checkingBalance);
         model.put("savingsAccountNumber", savingsAccountNumber);
