@@ -113,14 +113,6 @@ public class ExampleController {
 
     }
 
-    @GET("/testinghandle")
-    public ModelAndView testHandle() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("name", "Ted");
-
-        return new ModelAndView("index.hbs", model);
-    }
-
     @GET("/home")
     public ModelAndView homePage(){
 
@@ -191,6 +183,28 @@ public class ExampleController {
         model.put("monthMoneyIn", monthMoneyIn);
         model.put("monthMoneyOut", monthMoneyOut);
         return new ModelAndView("spending.hbs", model);
+    }
+
+    @GET("/transaction")
+    public ModelAndView transactionsPage() {
+
+        String time = "16:39";
+        String id = "1234456";
+        String type = "payment";
+        double amount = 140.00;
+        String to = "Business Account";
+        String from = "Personal Account";
+
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("time", time);
+        model.put("id", id);
+        model.put("type", type);
+        model.put("amount", amount);
+        model.put("to", to);
+        model.put("from", from);
+
+        return new ModelAndView("transaction.hbs", model);
     }
 
     /*
