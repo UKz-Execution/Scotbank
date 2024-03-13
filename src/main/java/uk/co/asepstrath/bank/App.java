@@ -3,7 +3,6 @@ package uk.co.asepstrath.bank;
 import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.accounts.AccountsAPI;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
-import uk.co.asepstrath.bank.example.ExampleController;
 import io.jooby.Jooby;
 import io.jooby.handlebars.HandlebarsModule;
 import io.jooby.helper.UniRestExtension;
@@ -12,8 +11,6 @@ import org.slf4j.Logger;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.sql.*;
 import java.util.ArrayList;
 
 public class App extends Jooby {
