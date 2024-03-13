@@ -15,21 +15,22 @@
     <a href="home#about">About Us</a>
     <a href="home#contact">Contact Us</a>
     <img src="/assets/ScotBankImg.png" alt="ScotBank Logo" class="logo">
-    <a href="http://localhost:8080/example/home" id = "home-link">Home</a>
+    <a href="http://localhost:8080/home" id = "home-link">Home</a>
 </div>
 
 <div class="container">
     <div class="form-container">
         <!-- <h2>Scotbank</h2>-->
-        <form>
+        <form id="login" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit" onclick = "window.location.href='http://localhost:8080/example/account';" >Login
-            </button>
+            <span style="color:red;"> {{invalidCredentials}} </span><br/>
+
+            <button type="submit">Login</button>
         </form>
     </div>
 

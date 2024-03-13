@@ -207,6 +207,12 @@ public class ExampleController {
         return new ModelAndView("transaction.hbs", model);
     }
 
+    @POST("/login")
+    public Object homePost(@FormParam String username, @FormParam String password) {
+        logger.info("Login request: {username: " + username + ", password: " + password + "}");
+        return homePage();
+    }
+
     /*
     The @POST annotation registers this function as a HTTP POST handler.
     It will look at the body of the POST request and try to deserialise into a MyMessage object
