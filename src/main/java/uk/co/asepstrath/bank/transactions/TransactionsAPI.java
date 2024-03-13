@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,11 +16,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class TransactionsAPI {
-    public TransactionsAPI() throws ParserConfigurationException, IOException, SAXException {
+    public TransactionsAPI() {
+
+}
+
+public static void loadData(Logger logger) throws ParserConfigurationException, IOException, SAXException {
         int p = 1;
         NodeList nodeList;
+        ArrayList<Transaction> transactions = new ArrayList<>();
         do{
             String urlString = "https://api.asep-strath.co.uk/api/transactions?size=1000&page=" + p;
             URL url = new URL(urlString);
@@ -30,8 +37,6 @@ public class TransactionsAPI {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
             nodeList = doc.getElementsByTagName("results");
-
-            ArrayList<Transaction> transactions = new ArrayList<>();
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Transaction transaction = new Transaction();
@@ -69,6 +74,18 @@ public class TransactionsAPI {
             }
             p++;
         } while (nodeList.getLength() > 0);
-    }
 
+        try (DatabaseAPI connection = DatabaseAPI.open()) {
+
+            for (Transaction transaction : transactions){
+                connection.createTransaction(transaction);
+                logger.info("Transaction created: {timestamp: " + transaction.getTimestamp() + ", amount: " + transaction.getAmount() + "id: " + transaction.getId());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
