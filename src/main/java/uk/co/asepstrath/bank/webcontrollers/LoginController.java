@@ -17,8 +17,12 @@ import java.util.Map;
 @Path("/login")
 public class LoginController extends WebController {
 
-    public LoginController(DataSource dataSource, Logger logger) {
-        super(dataSource, logger);
+    public LoginController() {
+        super();
+    }
+
+    public LoginController(Logger logger) {
+        super(logger);
     }
 
     @GET("")

@@ -12,8 +12,12 @@ import java.util.Map;
 
 @Path("/spending")
 public class SpendingController extends WebController {
-    public SpendingController(DataSource dataSource, Logger logger) {
-        super(dataSource, logger);
+    public SpendingController() {
+        super();
+    }
+
+    public SpendingController(Logger logger) {
+        super(logger);
     }
 
     @GET("")

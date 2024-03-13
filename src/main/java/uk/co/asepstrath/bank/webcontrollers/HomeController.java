@@ -12,8 +12,12 @@ import java.util.Map;
 
 @Path("/")
 public class HomeController extends WebController {
-    public HomeController(DataSource dataSource, Logger logger) {
-        super(dataSource, logger);
+    public HomeController() {
+        super();
+    }
+
+    public HomeController(Logger logger) {
+        super(logger);
     }
 
     @GET("")
