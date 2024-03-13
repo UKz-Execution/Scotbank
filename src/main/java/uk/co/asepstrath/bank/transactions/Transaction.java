@@ -12,12 +12,12 @@ public class Transaction {
     public String from;
 
 
-    public Transaction (LocalDateTime timestamp, UUID id, String type, double amount, String to, String from) {
+    public Transaction (LocalDateTime timestamp, UUID id, String type, BigDecimal amount, String to, String from) {
 
         this.timestamp = timestamp;
         this.id = id;
         this.type = type;
-        this.amount = BigDecimal.valueOf(amount);
+        this.amount = amount;
         this.to = to;
         this.from = from;
     }

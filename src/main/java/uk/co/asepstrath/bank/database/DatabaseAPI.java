@@ -1,11 +1,13 @@
 package uk.co.asepstrath.bank.database;
 
 import uk.co.asepstrath.bank.accounts.Account;
+import uk.co.asepstrath.bank.transactions.Transaction;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 public class DatabaseAPI implements AutoCloseable {
     private static DataSource db = null;
@@ -42,10 +44,6 @@ public class DatabaseAPI implements AutoCloseable {
     }
 
     private void initialiseDatabase() throws SQLException {
-//        Statement dropTable = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-//                ResultSet.CONCUR_UPDATABLE);
-//        int r = dropTable.executeUpdate("DROP TABLE IF EXISTS accounts;");
-
         Statement createTable = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
         createTable.executeUpdate("""
@@ -55,6 +53,15 @@ public class DatabaseAPI implements AutoCloseable {
                  startingBalance decimal NOT NULL,
                  balance decimal NOT NULL,
                  roundUpEnabled boolean NOT NULL);""");
+
+        createTable.executeUpdate("""
+                CREATE TABLE IF NOT EXISTS transactions (
+                 timestamp text NOT NULL,
+                 id varchar(36) NOT NULL,
+                 type text NOT NULL,
+                 amount decimal NOT NULL,
+                 "to" text NOT NULL,
+                 "from" text NOT NULL);""");
     }
 
     public void createAccount(Account account) throws SQLException { // Stores an account in the database
@@ -65,6 +72,18 @@ public class DatabaseAPI implements AutoCloseable {
         prep.setBigDecimal(3, account.getStartingBalance());
         prep.setBigDecimal(4, account.getBalance());
         prep.setBoolean(5, account.isRoundUpEnabled());
+        prep.executeUpdate();
+    }
+
+    public void createTransaction(Transaction transaction) throws SQLException { // Stores an transaction in the database
+        String sql = "INSERT INTO transactions (timestamp, id, type, amount, to, from) VALUES (?,?,?,?,?,?)";
+        PreparedStatement prep = conn.prepareStatement(sql);
+        prep.setString(1, transaction.getTimestamp().toString());
+        prep.setString(2, transaction.getId().toString());
+        prep.setString(3, transaction.getType());
+        prep.setBigDecimal(4, transaction.getAmount());
+        prep.setString(5, transaction.getTo());
+        prep.setString(6, transaction.getFrom());
         prep.executeUpdate();
     }
 
@@ -97,6 +116,12 @@ public class DatabaseAPI implements AutoCloseable {
         return getAccountsFromResult(resultSet);
     }
 
+    public ArrayList<Transaction> getAllTransactions() throws SQLException { // Fetches all transactions stored in database
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM transactions");
+        return getTransactionsFromResult(resultSet);
+    }
+
     public Account getAccountById(UUID id) throws SQLException { // Fetches account by id
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM accounts WHERE id = ?");
         statement.setString(1, id.toString());
@@ -104,6 +129,15 @@ public class DatabaseAPI implements AutoCloseable {
         ArrayList<Account> accountData = getAccountsFromResult(resultSet);
         if (accountData.size() != 1) return null;
         return accountData.get(0);
+    }
+
+    public Transaction getTransactionById(UUID id) throws SQLException { // Fetches transaction by id
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM transactions WHERE id = ?");
+        statement.setString(1, id.toString());
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Transaction> transactionData = getTransactionsFromResult(resultSet);
+        if (transactionData.size() != 1) return null;
+        return transactionData.get(0);
     }
 
     private ArrayList<Account> getAccountsFromResult(ResultSet resultSet) throws SQLException {
@@ -117,5 +151,19 @@ public class DatabaseAPI implements AutoCloseable {
             accounts.add(new Account(id, name, startingBalance, balance, roundUpEnabled));
         }
         return accounts;
+    }
+
+    private ArrayList<Transaction> getTransactionsFromResult(ResultSet resultSet) throws SQLException {
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        while (resultSet.next()) {
+            LocalDateTime timestamp = LocalDateTime.parse(resultSet.getString("timestamp"));
+            UUID id = UUID.fromString(resultSet.getString("id"));
+            String type = resultSet.getString("type");
+            BigDecimal amount = resultSet.getBigDecimal("amount");
+            String to = resultSet.getString("to");
+            String from = resultSet.getString("from");
+            transactions.add(new Transaction(timestamp, id, type, amount, to, from));
+        }
+        return transactions;
     }
 }
