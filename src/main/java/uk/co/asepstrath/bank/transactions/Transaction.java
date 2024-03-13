@@ -11,6 +11,8 @@ public class Transaction {
     public String to;
     public String from;
 
+    public Transaction(){
+    }
 
     public Transaction (LocalDateTime timestamp, UUID id, String type, double amount, String to, String from) {
 
@@ -19,6 +21,30 @@ public class Transaction {
         this.type = type;
         this.amount = BigDecimal.valueOf(amount);
         this.to = to;
+        this.from = from;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setId (UUID id) {
+        this.id = id;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public void setAmount(double amount) {
+        BigDecimal.valueOf(amount);
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setFrom(String from) {
         this.from = from;
     }
 
@@ -40,4 +66,5 @@ public class Transaction {
     public String getFrom() {
         return from;
     }
+
 }
