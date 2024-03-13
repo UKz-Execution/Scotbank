@@ -1,6 +1,5 @@
 package uk.co.asepstrath.bank;
 
-import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.accounts.AccountsAPI;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 import io.jooby.Jooby;
@@ -14,8 +13,6 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 
 public class App extends Jooby {
-
-    private ArrayList<Account> accountData;
 
     {
         /*
