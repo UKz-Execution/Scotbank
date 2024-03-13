@@ -2,10 +2,24 @@ package uk.co.asepstrath.bank;
 
 import io.jooby.Context;
 import io.jooby.test.MockContext;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 public class ControllerTests {
+
+    @BeforeEach
+    public void setUp() {
+        Context mocked = new MockContext();
+
+        WebController controller = new WebController();
+        WebController controllerLogger = new WebController(Mockito.mock(Logger.class));
+    }
 
     @Test
     public void accountPage() {
