@@ -14,8 +14,12 @@ import java.util.Map;
 
 @Path("/account")
 public class AccountController extends WebController {
-    public AccountController(DataSource dataSource, Logger logger) {
-        super(dataSource, logger);
+    public AccountController() {
+        super();
+    }
+
+    public AccountController(Logger logger) {
+        super(logger);
     }
 
     @GET("")

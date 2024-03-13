@@ -12,8 +12,13 @@ import java.util.Map;
 
 @Path("/transaction")
 public class TransactionController extends WebController {
-    public TransactionController(DataSource dataSource, Logger logger) {
-        super(dataSource, logger);
+
+    public TransactionController() {
+        super();
+    }
+
+    public TransactionController(Logger logger) {
+        super(logger);
     }
 
     @GET("")

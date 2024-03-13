@@ -10,11 +10,13 @@ import javax.sql.DataSource;
 import java.util.UUID;
 
 public class WebController {
-    protected final DataSource dataSource;
     protected final Logger logger;
 
-    public WebController(DataSource dataSource, Logger logger) {
-        this.dataSource = dataSource;
+    public WebController() {
+        logger = null;
+    }
+
+    public WebController(Logger logger) {
         this.logger = logger;
     }
 
@@ -37,6 +39,14 @@ public class WebController {
     protected void setCurrentAccount(Context context, Account account) {
         if (account == null) context.session().put("uuid", "");
         else context.session().put("uuid", account.getId().toString());
+    }
+
+    protected void log(String value) {
+        if (logger != null) logger.info(value);
+    }
+
+    protected void logError(String value) {
+        if (logger != null) logger.error(value);
     }
 
 }
