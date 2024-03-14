@@ -37,7 +37,7 @@ public class Transaction {
     }
 
     public void setAmount(double amount) {
-        BigDecimal.valueOf(amount);
+        this.amount = BigDecimal.valueOf(amount);
     }
 
     public void setTo(String to) {

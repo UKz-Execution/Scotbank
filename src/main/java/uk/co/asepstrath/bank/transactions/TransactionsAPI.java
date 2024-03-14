@@ -24,7 +24,7 @@ public class TransactionsAPI {
 }
 
 public static void loadData(Logger logger) throws ParserConfigurationException, IOException, SAXException {
-        int p = 1;
+        int p = 0;
         NodeList nodeList;
         ArrayList<Transaction> transactions = new ArrayList<>();
         do{
@@ -48,8 +48,10 @@ public static void loadData(Logger logger) throws ParserConfigurationException, 
                                 transaction.setTimestamp(LocalDateTime.parse(node.getFirstChild().getNodeValue(), formatter));
                             break;
                         case "amount":
-                            if (node.getFirstChild() != null)
-                                transaction.setAmount(Double.parseDouble(node.getFirstChild().getNodeValue()));
+                            if (node.getFirstChild() != null) {
+                                double amount = Double.parseDouble(node.getFirstChild().getNodeValue());
+                                transaction.setAmount(amount);
+                            }
                             break;
                         case "from":
                             if (node.getFirstChild() != null)
@@ -79,7 +81,7 @@ public static void loadData(Logger logger) throws ParserConfigurationException, 
 
             for (Transaction transaction : transactions){
                 connection.createTransaction(transaction);
-                logger.info("Transaction created: {timestamp: " + transaction.getTimestamp() + ", amount: " + transaction.getAmount() + "id: " + transaction.getId());
+                logger.info("Transaction created: {timestamp: " + transaction.getTimestamp() + ", amount: " + transaction.getAmount() + "id: " + transaction.getId() + "from: " + transaction.getFrom() + "to: " + transaction.getTo() + "type: " + transaction.getType());
             }
 
         } catch (Exception e) {

@@ -49,23 +49,23 @@ public class DatabaseAPI implements AutoCloseable {
         createTable.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS accounts (
                  id varchar(36) NOT NULL,
-                 name text NOT NULL,
+                 `name` text NOT NULL,
                  startingBalance decimal NOT NULL,
-                 balance decimal NOT NULL,
+                 balance double NOT NULL,
                  roundUpEnabled boolean NOT NULL);""");
 
         createTable.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS transactions (
-                 timestamp text NOT NULL,
+                 `timestamp` text NOT NULL,
                  id varchar(36) NOT NULL,
                  type text NOT NULL,
-                 amount decimal NOT NULL,
-                 "to" text NOT NULL,
-                 "from" text NOT NULL);""");
+                 amount double NOT NULL,
+                 `to` text,
+                 `from` text);""");
     }
 
     public void createAccount(Account account) throws SQLException { // Stores an account in the database
-        String sql = "INSERT INTO accounts (id, name, startingBalance, balance, roundUpEnabled) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO accounts (id, `name`, startingBalance, balance, roundUpEnabled) VALUES (?,?,?,?,?)";
         PreparedStatement prep = conn.prepareStatement(sql);
         prep.setString(1, account.getId().toString());
         prep.setString(2, account.getName());
@@ -75,8 +75,8 @@ public class DatabaseAPI implements AutoCloseable {
         prep.executeUpdate();
     }
 
-    public void createTransaction(Transaction transaction) throws SQLException { // Stores an transaction in the database
-        String sql = "INSERT INTO transactions (timestamp, id, type, amount, to, from) VALUES (?,?,?,?,?,?)";
+    public void createTransaction(Transaction transaction) throws SQLException { // Stores a transaction in the database
+        String sql = "INSERT INTO transactions (`timestamp`, id, type, amount, `to`, `from`) VALUES (?,?,?,?,?,?)";
         PreparedStatement prep = conn.prepareStatement(sql);
         prep.setString(1, transaction.getTimestamp().toString());
         prep.setString(2, transaction.getId().toString());
@@ -92,7 +92,7 @@ public class DatabaseAPI implements AutoCloseable {
     }
 
     public void updateAccountName(UUID id, String name) throws SQLException { // Updates name according to account id
-        PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET name = ? WHERE id = ?");
+        PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET `name` = ? WHERE id = ?");
         statement.setString(1, name);
         statement.setString(2, id.toString());
         statement.executeUpdate();
