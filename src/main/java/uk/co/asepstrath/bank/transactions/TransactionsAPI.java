@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
 
 public class TransactionsAPI {
     public TransactionsAPI() {

@@ -7,6 +7,7 @@ import io.jooby.handlebars.HandlebarsModule;
 import io.jooby.helper.UniRestExtension;
 import io.jooby.hikari.HikariModule;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.transactions.TransactionsAPI;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
 import javax.sql.DataSource;
@@ -65,6 +66,7 @@ public class App extends Jooby {
         DataSource db = require(DataSource.class);
         DatabaseAPI.initDatabase(db);
         AccountsAPI.loadData(log);
+        TransactionsAPI.loadData(log);
     }
 
     /*
