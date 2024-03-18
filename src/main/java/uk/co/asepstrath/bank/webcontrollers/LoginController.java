@@ -39,6 +39,20 @@ public class LoginController extends WebController {
         return new ModelAndView("login.hbs", model);
     }
 
+    @GET("/admin") // Define the admin path
+    public ModelAndView adminPage(Context context) {
+        return createAdminPage(context, false);
+    }
+
+    private ModelAndView createAdminPage(Context context, boolean failedAttempt) {
+        if (getCurrentAccount(context) != null) setCurrentAccount(context, null); // todo : try to limit database lookups
+
+        Map<String, Object> model = new HashMap<>();
+        if (failedAttempt) model.put("invalidCredentials", "Invalid username or password!");
+
+        return new ModelAndView("admin.hbs", model);
+    }
+
     @POST("")
     public Object loginCredentials(Context context) {
 
@@ -58,7 +72,7 @@ public class LoginController extends WebController {
             logger.error(e.getMessage());
         }
 
-        return createLoginPage(context, true);
+        return createAdminPage(context, true);
     }
 
 
