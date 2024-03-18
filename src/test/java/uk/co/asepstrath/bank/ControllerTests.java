@@ -1,21 +1,29 @@
 package uk.co.asepstrath.bank;
 
 import io.jooby.Context;
+import io.jooby.ModelAndView;
+import io.jooby.StatusCode;
 import io.jooby.test.MockContext;
+import io.jooby.test.MockRouter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 public class ControllerTests {
+    MockContext mocked;
+    MockRouter router;
 
     @BeforeEach
     public void setUp() {
-        Context mocked = new MockContext();
+        mocked = new MockContext();
+        router = new MockRouter(new App());
 
         WebController controller = new WebController();
         WebController controllerLogger = new WebController(Mockito.mock(Logger.class));
@@ -23,36 +31,40 @@ public class ControllerTests {
 
     @Test
     public void accountPage() {
-        Context mocked = new MockContext();
 
-        AccountController controller = new AccountController();
 
+        /*AccountController controller = new AccountController();
+        controller.accountPage(mocked);
+        verify(controller).accountPage(ArgumentMatchers.eq(mocked));*/
     }
 
     @Test
     public void homePage() {
-        Context mocked = new MockContext();
+        router.get("/home", rsp -> {
+            assertEquals("home.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
 
-        HomeController controller = new HomeController();
+        //HomeController controller = new HomeController();
     }
 
     @Test
     public void createLoginPage() {
-        Context mocked = new MockContext();
+
 
         LoginController controller = new LoginController();
     }
 
     @Test
     public void loginWithCredentials() {
-        Context mocked = new MockContext();
 
-        LoginController controller = new LoginController();
+
+        //LoginController controller = new LoginController();
     }
 
     @Test
     public void spendingPage() {
-        Context mocked = new MockContext();
+
 
         SpendingController controller = new SpendingController();
     }
@@ -60,14 +72,14 @@ public class ControllerTests {
     @Test
     public void transactionPage() {
 
-        Context mocked = new MockContext();
+
 
         TransactionController controller = new TransactionController();
     }
 
     @Test
     public void webController() {
-        Context mocked = new MockContext();
+
 
         WebController controller = new WebController();
 
