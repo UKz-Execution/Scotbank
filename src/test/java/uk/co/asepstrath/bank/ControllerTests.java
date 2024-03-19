@@ -2,8 +2,11 @@ package uk.co.asepstrath.bank;
 
 import io.jooby.Context;
 import io.jooby.test.MockContext;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import uk.co.asepstrath.bank.transactions.Transaction;
+import org.mockito.Mockito;
+import org.slf4j.Logger;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
 import java.math.BigDecimal;
@@ -57,13 +60,19 @@ public class ControllerTests {
         Context mocked = new MockContext();
 
         TransactionController controller = new TransactionController();
+
+        controller.transactionsPage(mocked);
     }
 
     @Test
     public void webController() {
         Context mocked = new MockContext();
 
+        // At the moment all methods in WebController are protected so idk if they contribute to coverage
         WebController controller = new WebController();
+        WebController controllerLogger = new WebController(Mockito.mock(Logger.class));
+
+//        Assertions.assertFalse();
 
 //        Assertions.assertEquals();
     }

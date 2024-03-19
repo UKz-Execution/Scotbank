@@ -44,7 +44,7 @@ public class LoginController extends WebController {
 
         String username = context.body().value();
         String password = context.body().value();
-        logger.info("Login request: {username: " + username + ", password: " + password + "}");
+        log("Login request: {username: " + username + ", password: " + password + "}");
 
         try (DatabaseAPI conn = DatabaseAPI.open()) {
             for (Account acc : conn.getAllAccounts()) {
@@ -55,7 +55,7 @@ public class LoginController extends WebController {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logError(e.getMessage());
         }
 
         return createLoginPage(context, true);
