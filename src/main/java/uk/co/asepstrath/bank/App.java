@@ -3,16 +3,14 @@ package uk.co.asepstrath.bank;
 import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.accounts.AccountsAPI;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
-import uk.co.asepstrath.bank.example.ExampleController;
 import io.jooby.Jooby;
 import io.jooby.handlebars.HandlebarsModule;
 import io.jooby.helper.UniRestExtension;
 import io.jooby.hikari.HikariModule;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.webcontrollers.*;
 
 import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.sql.*;
 import java.util.ArrayList;
 
 public class App extends Jooby {
@@ -41,7 +39,11 @@ public class App extends Jooby {
         DataSource ds = require(DataSource.class);
         Logger log = getLog();
 
-        mvc(new ExampleController(ds, log));
+        mvc(new AccountController(ds, log));
+        mvc(new HomeController(ds, log));
+        mvc(new LoginController(ds, log));
+        mvc(new SpendingController(ds, log));
+        mvc(new TransactionController(ds, log));
 
         /*
         Finally we register our application lifecycle methods
