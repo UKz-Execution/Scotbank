@@ -18,6 +18,9 @@ body {
     margin-top: 20px;
     height: 50px;
     padding-bottom: 5px;
+    position: fixed;
+    top: 0; /* Align to the top */
+    z-index: 1000;
 }
 
 .topnav a {
@@ -53,11 +56,14 @@ body {
 
 .container {
     display: flex;
-    max-width: 800px;
+    max-width: 1000px;
     width: 100%;
     background-color: rgba(52, 73, 94, 0.8);
     border-radius: 0;
     overflow: hidden;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .form-container,
@@ -66,6 +72,7 @@ body {
     padding: 40px;
     text-align: center;
     height: 250px;
+    display: inline-flex;
 }
 
 .form-container {
@@ -192,11 +199,13 @@ li a:hover {
 }
 
 .buttons-section {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     clear: left;
     width: 200px;
+    text-align: left;
 }
 
 .action-button {
@@ -214,9 +223,14 @@ li a:hover {
     background-color: #2980b9;
 }
 
-.overview{
+.overview {
     float:right;
+    text-align: right;
     margin-bottom:20px;
 }
 
+.title {
+    text-align: center;
+    background-color: #ecf0f1;
+}
 
