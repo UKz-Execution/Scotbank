@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessesAPI {
-/*
-    public BusinessesAPI() {
 
+    public BusinessesAPI() {
+    /*
 
         Business businessResponse = Unirest.get("https://api.asep-strath.co.uk/api/businesses").asObject(Business.class).getBody();
         String csvData = businessResponse.toString();
