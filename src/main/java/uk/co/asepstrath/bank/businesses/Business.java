@@ -8,7 +8,7 @@ public class Business {
     public String sanctioned;
 
 
-    public Business() {
+    /* public Business() {
 
     }
 
@@ -51,5 +51,5 @@ public class Business {
 
     public void setSanctioned(String sanctioned) {
         this.sanctioned = sanctioned;
-    }
+    }*/
 }
