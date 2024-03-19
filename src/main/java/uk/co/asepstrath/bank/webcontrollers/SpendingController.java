@@ -5,6 +5,7 @@ import io.jooby.ModelAndView;
 import io.jooby.annotation.GET;
 import io.jooby.annotation.Path;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.users.User;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -22,12 +23,13 @@ public class SpendingController extends WebController {
 
     @GET("")
     public ModelAndView spendingPage(Context context) {
-
         if (!isLoggedIn(context)) {
             context.sendRedirect("/login");
             return null;
         }
 
+
+        User user = getCurrentUser(context);
         double totalMoneyIn = 4500.50;
         double totalMoneyOut = 3200.75;
         double monthMoneyIn = 1780.90;

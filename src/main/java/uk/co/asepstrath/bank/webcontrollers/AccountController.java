@@ -7,9 +7,9 @@ import io.jooby.annotation.Path;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.transactions.Transaction;
+import uk.co.asepstrath.bank.users.User;
 
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,25 +28,27 @@ public class AccountController extends WebController {
 
     @GET("")
     public ModelAndView accountPage(Context context) {
-
-        Account account = getCurrentAccount(context);
-        if (account == null) {
+        if (!isLoggedIn(context)) {
             context.sendRedirect("/login");
             return null;
         }
 
-        String username = account.getName();
-        String checkingAccountNumber = account.getId().toString();
-        BigDecimal checkingBalance = account.getBalance();
-        String savingsAccountNumber = account.getId().toString();
-        BigDecimal savingsBalance = account.getBalance();
-
+        User user = getCurrentUser(context);
         Map<String, Object> model = new HashMap<>();
-        model.put("username", username);
-        model.put("checkingAccountNumber", checkingAccountNumber);
-        model.put("checkingBalance", checkingBalance);
-        model.put("savingsAccountNumber", savingsAccountNumber);
-        model.put("savingsBalance", savingsBalance);
+        if (user.getAccounts().size() > 0) {
+            Account account = user.getAccounts().get(0);
+            String username = account.getName();
+            String checkingAccountNumber = account.getId().toString();
+            BigDecimal checkingBalance = account.getBalance();
+            String savingsAccountNumber = account.getId().toString();
+            BigDecimal savingsBalance = account.getBalance();
+
+            model.put("username", username);
+            model.put("checkingAccountNumber", checkingAccountNumber);
+            model.put("checkingBalance", checkingBalance);
+            model.put("savingsAccountNumber", savingsAccountNumber);
+            model.put("savingsBalance", savingsBalance);
+        }
         return new ModelAndView("account.hbs", model);
     }
 
