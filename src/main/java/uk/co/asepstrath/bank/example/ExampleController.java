@@ -66,7 +66,7 @@ public class ExampleController {
             // Create Statement (batch of SQL Commands)
             Statement statement = connection.createStatement();
             // Perform SQL Query
-            ResultSet set = statement.executeQuery("SELECT * FROM `Example` Where `Key` = '"+welcomeMessageKey+"'");
+            ResultSet set = statement.executeQuery("SELECT * FROM `Example` Where `Key` = '" + welcomeMessageKey + "'");
             // Read First Result
             set.next();
             // Extract value from Result
@@ -75,7 +75,7 @@ public class ExampleController {
             return welcomeMessage;
         } catch (SQLException e) {
             // If something does go wrong this will log the stack trace
-            logger.error("Database Error Occurred",e);
+            logger.error("Database Error Occurred", e);
             // And return a HTTP 500 error to the requester
             throw new StatusCodeException(StatusCode.SERVER_ERROR, "Database Error Occurred");
         }
@@ -114,7 +114,7 @@ public class ExampleController {
     }
 
     @GET("/home")
-    public ModelAndView homePage(){
+    public ModelAndView homePage() {
 
         String userName = "John Doe";
         String checkingAccountNumber = "123456789";
@@ -133,7 +133,7 @@ public class ExampleController {
     }
 
     @GET("/login")
-    public ModelAndView loginPage(){
+    public ModelAndView loginPage() {
 
         String userName = "John Doe";
         String checkingAccountNumber = "123456789";
@@ -152,7 +152,7 @@ public class ExampleController {
     }
 
     @GET("/account")
-    public ModelAndView accountPage(){
+    public ModelAndView accountPage() {
 
         String username = "Joe Bloggs";
         String checkingAccountNumber = "192837465";
@@ -170,7 +170,7 @@ public class ExampleController {
     }
 
     @GET("/spending")
-    public ModelAndView spendingPage(){
+    public ModelAndView spendingPage() {
 
         double totalMoneyIn = 4500.50;
         double totalMoneyOut = 3200.75;
@@ -206,6 +206,24 @@ public class ExampleController {
 
         return new ModelAndView("transaction.hbs", model);
     }
+
+    @GET("/managerView")
+    public ModelAndView managersPage() {
+        String username = "Joe Bloggs";
+        String checkingAccountNumber = "123456";
+        double checkingBalance = 1536.00;
+        String savingsAccountNumber = "654321";
+        double savingsBalance = 6351.00;
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("username", username);
+        model.put("checkingAccountNumber", checkingAccountNumber);
+        model.put("checkingBalance", checkingBalance);
+        model.put("savingsAccountNumber", savingsAccountNumber);
+        model.put("savingsBalance", savingsBalance);
+        return new ModelAndView("allAccounts.hbs", model);
+    }
+
 
     /*
     The @POST annotation registers this function as a HTTP POST handler.
