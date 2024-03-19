@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessesAPI {
-
+/*
     public BusinessesAPI() {
 
-        /*Business businessResponse = Unirest.get("https://api.asep-strath.co.uk/api/businesses").asObject(Business.class).getBody();
+
+        Business businessResponse = Unirest.get("https://api.asep-strath.co.uk/api/businesses").asObject(Business.class).getBody();
         String csvData = businessResponse.toString();
 
         List<Business> businessList = parseCsvData(csvData);
