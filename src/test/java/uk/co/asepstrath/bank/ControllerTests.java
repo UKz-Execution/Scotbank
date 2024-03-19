@@ -1,8 +1,6 @@
 package uk.co.asepstrath.bank;
 
-import io.jooby.Context;
-import io.jooby.ModelAndView;
-import io.jooby.StatusCode;
+import io.jooby.*;
 import io.jooby.test.MockContext;
 import io.jooby.test.MockRouter;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +29,11 @@ public class ControllerTests {
 
     @Test
     public void accountPage() {
+        router.get("/account", rsp -> {
+            assertEquals("/login", rsp.getHeaders().get("location"));
+            assertEquals(StatusCode.FOUND, rsp.getStatusCode());
+        });
+
 
 
         /*AccountController controller = new AccountController();
@@ -45,12 +48,27 @@ public class ControllerTests {
             assertEquals(StatusCode.OK, rsp.getStatusCode());
         });
 
-        //HomeController controller = new HomeController();
+        router.get("/", rsp -> {
+            assertEquals("home.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
+
+        HomeController controller = new HomeController();
     }
 
     @Test
     public void createLoginPage() {
+        router.get("/login", rsp -> {
+            assertEquals("login.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
 
+        /*mocked.setBody("bob");
+
+        router.post("/login", mocked, rsp -> {
+            assertEquals("login.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });*/
 
         LoginController controller = new LoginController();
     }
@@ -59,19 +77,25 @@ public class ControllerTests {
     public void loginWithCredentials() {
 
 
-        //LoginController controller = new LoginController();
+        LoginController controller = new LoginController();
     }
 
     @Test
     public void spendingPage() {
-
+        router.get("/spending", rsp -> {
+            assertEquals("/login", rsp.getHeaders().get("location"));
+            assertEquals(StatusCode.FOUND, rsp.getStatusCode());
+        });
 
         SpendingController controller = new SpendingController();
     }
 
     @Test
     public void transactionPage() {
-
+        router.get("/transaction", rsp -> {
+            assertEquals("/login", rsp.getHeaders().get("location"));
+            assertEquals(StatusCode.FOUND, rsp.getStatusCode());
+        });
 
 
         TransactionController controller = new TransactionController();
