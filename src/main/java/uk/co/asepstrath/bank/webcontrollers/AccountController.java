@@ -6,14 +6,18 @@ import io.jooby.annotation.GET;
 import io.jooby.annotation.Path;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.accounts.Account;
+import uk.co.asepstrath.bank.transactions.Transaction;
+
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @Path("/account")
 public class AccountController extends WebController {
+
     public AccountController() {
         super();
     }
@@ -68,4 +72,35 @@ public class AccountController extends WebController {
         model.put("savingsBalance", savingsBalance);
         return new ModelAndView("allAccounts.hbs", model);
 }
+
+    public BigDecimal calculateCurrentAmount(double startingAmount, ArrayList<Transaction> transactions, String accountUUID) {
+        BigDecimal currentAmount = BigDecimal.valueOf(startingAmount);
+        for (Transaction transaction : transactions) {
+            String transactionType = transaction.getType();
+            switch (transactionType) {
+                case "PAYMENT":
+                case "WITHDRAWAL":
+                    if (transaction.getFrom().equals(accountUUID)) {
+                        currentAmount = currentAmount.subtract(transaction.getAmount());
+                    }
+                    break;
+                case "DEPOSIT":
+                case "COLLECT_ROUNDUPS":
+                    if (transaction.getTo().equals(accountUUID)) {
+                        currentAmount = transaction.getAmount().add(currentAmount);
+                    }
+                    break;
+                case "TRANSFER":
+                    if (transaction.getFrom().equals(accountUUID)) {
+                        currentAmount = currentAmount.subtract(transaction.getAmount());
+                    } else if (transaction.getTo().equals(accountUUID)) {
+                        currentAmount = transaction.getAmount().add(currentAmount);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return currentAmount;
+    }
 }

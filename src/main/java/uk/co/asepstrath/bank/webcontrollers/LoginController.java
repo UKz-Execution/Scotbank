@@ -58,7 +58,7 @@ public class LoginController extends WebController {
 
         String username = context.body().value();
         String password = context.body().value();
-        logger.info("Login request: {username: " + username + ", password: " + password + "}");
+        log("Login request: {username: " + username + ", password: " + password + "}");
 
         try (DatabaseAPI conn = DatabaseAPI.open()) {
             for (Account acc : conn.getAllAccounts()) {
@@ -69,7 +69,23 @@ public class LoginController extends WebController {
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logError(e.getMessage());
+        }
+
+        return createLoginPage(context, true);
+    }
+
+    @POST("/admin")
+    public Object loginCredentialsAdmin(Context context) {
+
+        String username = context.body().value();
+        String password = context.body().value();
+        log("Admin login request: {username: " + username + ", password: " + password + "}");
+
+        if (username.equals("admin") && password.equals("pass")) {
+            setCurrentAccount(context, new Account());
+            context.sendRedirect("/account/manager");
+            return null;
         }
 
         return createAdminPage(context, true);

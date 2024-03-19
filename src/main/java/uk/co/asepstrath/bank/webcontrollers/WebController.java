@@ -1,16 +1,14 @@
 package uk.co.asepstrath.bank.webcontrollers;
 
 import io.jooby.Context;
-import io.jooby.Session;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
-import javax.sql.DataSource;
 import java.util.UUID;
 
 public class WebController {
-    protected final Logger logger;
+    private final Logger logger;
 
     public WebController() {
         logger = null;
@@ -31,7 +29,7 @@ public class WebController {
         try (DatabaseAPI connection = DatabaseAPI.open()) {
             return connection.getAccountById(uuid);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logError(e.getMessage());
         }
         return null;
     }
