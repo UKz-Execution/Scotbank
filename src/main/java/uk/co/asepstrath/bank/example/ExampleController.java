@@ -209,18 +209,14 @@ public class ExampleController {
 
     @GET("/managerView")
     public ModelAndView managersPage() {
-        String username = "Joe Bloggs";
-        String checkingAccountNumber = "123456";
-        double checkingBalance = 1536.00;
-        String savingsAccountNumber = "654321";
-        double savingsBalance = 6351.00;
+        String id = "132324355";
+        String name = "joe bloggs";
+        double balance = 1537.00;
 
         Map<String, Object> model = new HashMap<>();
-        model.put("username", username);
-        model.put("checkingAccountNumber", checkingAccountNumber);
-        model.put("checkingBalance", checkingBalance);
-        model.put("savingsAccountNumber", savingsAccountNumber);
-        model.put("savingsBalance", savingsBalance);
+        model.put("id", id);
+        model.put("name", name);
+        model.put("balance", balance);
         return new ModelAndView("allAccounts.hbs", model);
     }
 
