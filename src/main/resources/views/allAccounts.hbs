@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <title>Scotbank - Managers Account</title>
+</head>
+
+<body>
+
+<div class="topnav">
+    <a href="home#welcome">Welcome</a>
+    <a href="home#services">Our Services</a>
+    <a href="home#about">About Us</a>
+    <a href="home#contact">Contact Us</a>
+    <img src="/assets/ScotBankImg.png" alt="ScotBank Logo" class="logo">
+    <a href="http://localhost:8080/home" id = "home-link">Home</a>
+</div>
+
+<div class="container">
+    <div class="info-container">
+        <h2>Accounts List</h2>
+        <ul>
+            {{#accounts}}
+                <li>
+                    <p>Account Number: {{id}}</p>
+                    <p>Account Holder: {{name}}</p>
+                    <p>Balance: {{balance}}</p>
+                </li>
+            {{/accounts}}
+        </ul>
+
+    </div>
+</div>
+</body>
+
+</html>
