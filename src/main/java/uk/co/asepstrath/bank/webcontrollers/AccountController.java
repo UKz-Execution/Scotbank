@@ -52,7 +52,7 @@ public class AccountController extends WebController {
         return new ModelAndView("account.hbs", model);
     }
 
-    @GET("")
+    @GET("/manager")
     public ModelAndView managerPage(Context context) {
 
         if (!isLoggedIn(context)) {
