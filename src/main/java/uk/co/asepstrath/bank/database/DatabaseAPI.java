@@ -72,7 +72,7 @@ public class DatabaseAPI implements AutoCloseable {
             prep.setString(1, account.getId().toString());
             prep.setString(2, account.getName());
             prep.setBigDecimal(3, account.getStartingBalance());
-            prep.setBigDecimal(4, account.getBalance());
+            prep.setBigDecimal(4, account.getTransactionBalance());
             prep.setBoolean(5, account.isRoundUpEnabled());
             prep.executeUpdate();
         }
@@ -92,7 +92,7 @@ public class DatabaseAPI implements AutoCloseable {
     }
 
     public void updateAccountBalance(Account account) throws SQLException {
-        updateAccountBalance(account.getId(), account.getBalance());
+        updateAccountBalance(account.getId(), account.getTransactionBalance());
     }
 
     public void updateAccountBalance(UUID id, BigDecimal balance) throws SQLException { // Updates balance according to account id

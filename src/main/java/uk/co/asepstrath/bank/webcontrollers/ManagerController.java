@@ -43,7 +43,7 @@ public class ManagerController extends WebController {
                 builder.append("</a></td><td>");
                 builder.append(account.getName());
                 builder.append("</td><td>");
-                builder.append(account.getBalance());
+                builder.append(account.getTransactionBalance());
                 builder.append("</td></tr>");
             }
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class ManagerController extends WebController {
 
             String username = account.getName();
             String checkingAccountNumber = account.getId().toString();
-            BigDecimal checkingBalance = account.getBalance();
+            BigDecimal checkingBalance = account.getTransactionBalance();
 
             model.put("username", username);
             model.put("checkingAccountNumber", checkingAccountNumber);

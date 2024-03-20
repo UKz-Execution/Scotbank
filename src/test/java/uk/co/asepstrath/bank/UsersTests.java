@@ -17,11 +17,11 @@ public class UsersTests {
         Assertions.assertThrows(RuntimeException.class, Users::loadUsersFromFile);
         Users.storeUserData(new SuperUser("admin", "admin"));
         Users.storeUserData(new User("user", "password"));
-        Assertions.assertEquals(2, Users.getUsers().size());
     }
 
     @Test
     public void testGetUser() {
+        Assertions.assertEquals(2, Users.getUsers().size());
         Assertions.assertNull(Users.getUser("notExist"));
         Assertions.assertNotNull(Users.getUser("admin"));
     }

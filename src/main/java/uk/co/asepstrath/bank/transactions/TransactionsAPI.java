@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 import javax.xml.XMLConstants;
@@ -12,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -86,6 +88,47 @@ public class TransactionsAPI {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static BigDecimal calculateCurrentAmount(Account account) {
+        try (DatabaseAPI conn = DatabaseAPI.open()) {
+            return calculateCurrentAmount(account, conn.getAllTransactions());
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to connect to the database to get transactions.");
+        }
+    }
+
+    public static BigDecimal calculateCurrentAmount(Account account, ArrayList<Transaction> transactions) {
+        BigDecimal currentAmount = account.getStartingBalance();
+        String accountUUID = account.getId().toString();
+
+        for (Transaction transaction : transactions) {
+            String transactionType = transaction.getType();
+            switch (transactionType) {
+                case "PAYMENT":
+                case "WITHDRAWAL":
+                    if (transaction.getFrom().equals(accountUUID)) {
+                        currentAmount = currentAmount.subtract(transaction.getAmount());
+                    }
+                    break;
+                case "DEPOSIT":
+                case "COLLECT_ROUNDUPS":
+                    if (transaction.getTo().equals(accountUUID)) {
+                        currentAmount = transaction.getAmount().add(currentAmount);
+                    }
+                    break;
+                case "TRANSFER":
+                    if (transaction.getFrom().equals(accountUUID)) {
+                        currentAmount = currentAmount.subtract(transaction.getAmount());
+                    } else if (transaction.getTo().equals(accountUUID)) {
+                        currentAmount = transaction.getAmount().add(currentAmount);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return currentAmount;
     }
 }
 

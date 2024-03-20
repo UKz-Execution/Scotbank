@@ -1,7 +1,8 @@
 package uk.co.asepstrath.bank.accounts;
 
+import uk.co.asepstrath.bank.transactions.TransactionsAPI;
+
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.UUID;
 
 public class Account {
@@ -60,6 +61,10 @@ public class Account {
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public BigDecimal getTransactionBalance() {
+        return TransactionsAPI.calculateCurrentAmount(this);
     }
 
     public UUID getId() {
