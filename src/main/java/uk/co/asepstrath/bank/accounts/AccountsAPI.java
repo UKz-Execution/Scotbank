@@ -5,9 +5,8 @@ import org.slf4j.Logger;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 public class AccountsAPI {
-
-    public AccountsAPI() {
-
+    public static void loadData() {
+        loadData(null);
     }
 
     public static void loadData(Logger logger) {
@@ -18,7 +17,7 @@ public class AccountsAPI {
             for (Account account : accountResponse) {
                 account.balance = account.startingBalance;
                 connection.createAccount(account);
-                logger.info("Account created: {name: " + account.getName() + ", startingBalance: " + account.getStartingBalance() + "}");
+                if (logger != null) logger.info("Account created: {name: " + account.getName() + ", startingBalance: " + account.getStartingBalance() + "}");
             }
 
         } catch (Exception e) {

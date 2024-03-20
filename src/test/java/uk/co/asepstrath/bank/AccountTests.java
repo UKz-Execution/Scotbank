@@ -1,24 +1,35 @@
 package uk.co.asepstrath.bank;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.asepstrath.bank.accounts.Account;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class AccountTests {
 
-    Account a;
+    private static Account a;
+
+    @BeforeAll
+    public static void initialise() {
+        a = new Account();
+        a = new Account(UUID.randomUUID(), "Test Account", 0, false);
+        a = new Account(UUID.fromString("635e583f-0af2-47cb-9625-5b66ba30e188"), "Test Account", BigDecimal.valueOf(0), false);
+    }
 
     @BeforeEach
-    void initialise() {
-        a = new Account();
+    public void resetBalance() {
+        a.withdraw(a.getBalance());
     }
 
     @Test
     public void createAccount(){
         Assertions.assertNotNull(a);
+        Assertions.assertThrows(RuntimeException.class, () -> new Account(null,null,null,null,false));
+        Assertions.assertThrows(RuntimeException.class, () -> new Account(UUID.randomUUID(),"Test",-1,-2,false));
     }
 
     @Test //Test 1
@@ -69,10 +80,13 @@ public class AccountTests {
 
     }
 
-    @Test //Test for task 4
-    public void exposeData(){
-//        Account a = new Account("John", new BigDecimal("102.80"));
-//        Assertions.assertEquals(a.toString(), "Name: John, Balance: 102.80");
+    @Test
+    public void testGetters() {
+        Assertions.assertEquals("635e583f-0af2-47cb-9625-5b66ba30e188", a.getId().toString());
+        Assertions.assertEquals("Test Account", a.getName());
+        Assertions.assertEquals(BigDecimal.ZERO, a.getStartingBalance());
+        Assertions.assertFalse(a.isRoundUpEnabled());
+        Assertions.assertEquals("Name: Test Account, Balance: 0.0", a.toString());
     }
 
 }
