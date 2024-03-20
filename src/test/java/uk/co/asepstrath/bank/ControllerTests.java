@@ -9,10 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.accounts.Account;
 import uk.co.asepstrath.bank.transactions.Transaction;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.users.SuperUser;
+import uk.co.asepstrath.bank.users.User;
+import uk.co.asepstrath.bank.users.Users;
 import uk.co.asepstrath.bank.webcontrollers.*;
+import uk.co.asepstrath.bank.database.DatabaseAPI;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -21,6 +26,7 @@ import static org.mockito.Mockito.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertEquals;
@@ -28,14 +34,16 @@ import static junit.framework.TestCase.assertEquals;
 public class ControllerTests {
     MockContext mocked;
     MockRouter router;
+    WebController webController;
+    WebController controllerLogger;
 
     @BeforeEach
     public void setUp() {
         mocked = new MockContext();
         router = new MockRouter(new App());
 
-        WebController controller = new WebController();
-        WebController controllerLogger = new WebController(Mockito.mock(Logger.class));
+        webController = new WebController();
+        controllerLogger = new WebController(Mockito.mock(Logger.class));
     }
 
     @Test
@@ -45,11 +53,19 @@ public class ControllerTests {
             assertEquals(StatusCode.FOUND, rsp.getStatusCode());
         });
 
+        mocked.session().put("username", "PhebeLehner");
+        mocked.session().put("password", "pass123");
+        List<Account> accs = new ArrayList<Account>();
+        accs.add(new Account());
+        Users.storeUserData(new User("PhebeLehner","pass123", accs));
 
 
-        /*AccountController controller = new AccountController();
-        controller.accountPage(mocked);
-        verify(controller).accountPage(ArgumentMatchers.eq(mocked));*/
+        router.get("/account", mocked, rsp -> {
+            assertEquals("account.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
+
+        AccountController controller = new AccountController();
     }
 
     @Test
@@ -74,13 +90,6 @@ public class ControllerTests {
             assertEquals(StatusCode.OK, rsp.getStatusCode());
         });
 
-        /*mocked.setBody("bob");
-
-        router.post("/login", mocked, rsp -> {
-            assertEquals("login.hbs", rsp.value().toString());
-            assertEquals(StatusCode.OK, rsp.getStatusCode());
-        });*/
-
         LoginController controller = new LoginController();
     }
 
@@ -98,6 +107,18 @@ public class ControllerTests {
             assertEquals(StatusCode.FOUND, rsp.getStatusCode());
         });
 
+        mocked.session().put("username", "PhebeLehner");
+        mocked.session().put("password", "pass123");
+        List<Account> accs = new ArrayList<Account>();
+        accs.add(new Account());
+        Users.storeUserData(new User("PhebeLehner","pass123", accs));
+
+
+        router.get("/spending", mocked, rsp -> {
+            assertEquals("spending.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
+
         SpendingController controller = new SpendingController();
     }
 
@@ -108,10 +129,54 @@ public class ControllerTests {
             assertEquals(StatusCode.FOUND, rsp.getStatusCode());
         });
 
+        mocked.session().put("username", "PhebeLehner");
+        mocked.session().put("password", "pass123");
+        List<Account> accs = new ArrayList<Account>();
+        accs.add(new Account());
+        Users.storeUserData(new User("PhebeLehner","pass123", accs));
+
+
+        router.get("/transaction", mocked, rsp -> {
+            assertEquals("transaction.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
 
         TransactionController controller = new TransactionController();
 
         controller.transactionsPage(mocked);
+    }
+
+    @Test
+    public void managerController() {
+        router.get("/account/manager", rsp -> {
+            assertEquals("/login", rsp.getHeaders().get("location"));
+            assertEquals(StatusCode.FOUND, rsp.getStatusCode());
+        });
+
+        router.get("/account/manager/view", rsp -> {
+            assertEquals("/login", rsp.getHeaders().get("location"));
+            assertEquals(StatusCode.FOUND, rsp.getStatusCode());
+        });
+
+        mocked.session().put("username", "admin");
+        mocked.session().put("password", "admin");
+        //List<Account> accs = new ArrayList<Account>();
+        //accs.add(new Account());
+        Users.storeUserData(new SuperUser("admin","admin"));
+
+
+        router.get("/account/manager", mocked, rsp -> {
+            assertEquals("allAccounts.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });
+        /*
+        router.get("/account/manager/view", mocked, rsp -> {
+            assertEquals("account.hbs", rsp.value().toString());
+            assertEquals(StatusCode.OK, rsp.getStatusCode());
+        });*/
+
+
+        ManagerController controller = new ManagerController();
     }
 
     @Test

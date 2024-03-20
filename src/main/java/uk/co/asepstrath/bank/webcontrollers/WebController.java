@@ -18,7 +18,7 @@ public class WebController {
     }
 
     protected boolean isLoggedIn(Context context) {
-        return !context.session().get("username").value("").equals("");
+        return !context.session().get("username").value("").isEmpty();
     }
 
     protected boolean isSuperUser(Context context) {
@@ -27,7 +27,7 @@ public class WebController {
 
     protected User getCurrentUser(Context context) {
         String username = context.session().get("username").value("");
-        if (username.equals("")) return null;
+        if (username.isEmpty()) return null;
         return Users.getUser(username);
     }
 

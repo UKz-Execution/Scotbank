@@ -48,29 +48,6 @@ public class AccountController extends WebController {
         return new ModelAndView("account.hbs", model);
     }
 
-//    @GET("")
-    public ModelAndView managerPage(Context context) {
-
-        if (!isLoggedIn(context)) {
-            context.sendRedirect("/login");
-            return null;
-        }
-
-        String username = "Joe Bloggs";
-        String checkingAccountNumber = "123456";
-        double checkingBalance = 1536.00;
-        String savingsAccountNumber = "654321";
-        double savingsBalance = 6351.00;
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("username", username);
-        model.put("checkingAccountNumber", checkingAccountNumber);
-        model.put("checkingBalance", checkingBalance);
-        model.put("savingsAccountNumber", savingsAccountNumber);
-        model.put("savingsBalance", savingsBalance);
-        return new ModelAndView("allAccounts.hbs", model);
-    }
-
     public BigDecimal calculateCurrentAmount(double startingAmount, ArrayList<Transaction> transactions, String accountUUID) {
         BigDecimal currentAmount = BigDecimal.valueOf(startingAmount);
         for (Transaction transaction : transactions) {

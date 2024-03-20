@@ -1,7 +1,7 @@
-package uk.co.asepstrath.bank.businesses;
+/*package uk.co.asepstrath.bank.businesses;
 
 public class Business {
-/*
+
     public String id;
     public String name;
     public String category;
@@ -51,5 +51,5 @@ public class Business {
 
     public void setSanctioned(String sanctioned) {
         this.sanctioned = sanctioned;
-    }*/
-}
+    }
+}*/
