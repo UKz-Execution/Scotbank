@@ -33,6 +33,7 @@ public class TransactionsAPI {
             URL url = new URL(urlString);
             DocumentBuilderFactory doc_build_factory = DocumentBuilderFactory.newInstance();
             doc_build_factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            doc_build_factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             DocumentBuilder doc_build = doc_build_factory.newDocumentBuilder();
             Document doc = doc_build.parse(new InputSource(url.openStream()));
             doc.getDocumentElement().normalize();
