@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class Users {
     private static final Path path = new File("./src/main/java/uk/co/asepstrath/bank/users/users.csv").toPath();
-    private static final HashSet<User> users = loadUsersFromFile();
+    private static final HashSet<User> users = new HashSet<>();
 
     /**
      * Load the lines of the default file.
@@ -48,7 +48,7 @@ public class Users {
     public static HashSet<User> loadUsersFromFile() {
         List<String> lines = getFileData();
 
-        HashSet<User> users = new HashSet<>();
+        users.clear();
 
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
@@ -115,29 +115,18 @@ public class Users {
 
         writeFileData(lines);
     }
-
+    
     /**
-     * Overwrite the default file with all values of all current players.
-     */
-    public static void updateAllSavedUsers() {
-        ArrayList<String> playerData = new ArrayList<>();
-        for (User user : users) {
-            playerData.add(user.toString());
-        }
-        writeFileData(playerData);
-    }
-
-    /**
-     * @return all players currently loaded from the file
+     * @return all users currently loaded from the file
      */
     public static List<User> getUsers() {
         return users.stream().toList();
     }
 
     /**
-     * Get the {@link User} object of a player currently loaded from the file.
-     * @param username the username of the player
-     * @return the player found or null if no player was found
+     * Get the {@link User} object of a user currently loaded from the file.
+     * @param username the username of the user
+     * @return the user found or null if no user was found
      */
     public static User getUser(String username) {
         for (User user : users) {

@@ -13,4 +13,14 @@ public class SuperUser extends User {
     public SuperUser(String username, String password, List<Account> accounts) {
         super(username, password, accounts);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(username + "," + password + ",true");
+        for (Account account : accounts) {
+            builder.append(",");
+            builder.append(account.getId().toString());
+        }
+        return builder.toString();
+    }
 }
