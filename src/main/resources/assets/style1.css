@@ -83,8 +83,11 @@ body {
 }
 
 .info-container {
-    flex: 2;
+
     background-color: #ecf0f1;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 h2 {
@@ -232,4 +235,5 @@ li a:hover {
 .title {
     text-align: center;
     background-color: #ecf0f1;
+    margin-bottom: 20px;
 }
