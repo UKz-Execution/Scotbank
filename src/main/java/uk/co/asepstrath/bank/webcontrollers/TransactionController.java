@@ -5,6 +5,7 @@ import io.jooby.ModelAndView;
 import io.jooby.annotation.GET;
 import io.jooby.annotation.Path;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.users.User;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
