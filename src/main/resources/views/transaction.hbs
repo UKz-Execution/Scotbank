@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/assets/style1.css">
     <title>Scotbank - Transaction</title>
 </head>
 
@@ -20,8 +20,11 @@
 </div>
 
 <div class="container">
-    <div class="info-container">
+    <div class = "title">
+        <h2>Transactions</h2>
+    </div>
 
+    <div class="info-container">
         <div class="buttons-section">
             <button class = "action-button" onclick = "window.location.href='http://localhost:8080/account';" >Account</button>
             <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction';" >Transactions</button>
@@ -29,8 +32,7 @@
             <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transactionDetail';" >Transaction Details</button>
         </div>
 
-        <h2>Transactions</h2>
-        <div>
+        <div class= "overview">
             <h3>All Transactions:</h3>
             <p> Transaction:</p>
             <p>  time: {{time}}</p>

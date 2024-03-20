@@ -2,62 +2,21 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: url('textureImg.jpg') center/cover fixed no-repeat;
+    background: url('textureImg.jpg') center/cover fixed no-repeat; /* Replace 'your-background-image.jpg' with the actual image path */
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-}
-
-
-.topnav {
-    background-color: #1d2a48;
-    overflow: hidden;
-    width: 100%;
-    margin-top: 20px;
-    height: 50px;
-    padding-bottom: 5px;
-}
-
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.section {
-    text-align: center;
-    padding: 20px; /* Adjust the padding to control section size */
-    color: #fff;
-    width: 80%; /* Adjust the width to control section size */
-    margin: 20px auto; /* Add margin for space between sections */
-    background-color: rgba(52, 73, 94, 0.5); /* Adjust opacity */
-}
-
-.section:nth-child(odd) {
-    background-color: rgba(52, 73, 94, 0.5);
-}
-
-.section:nth-child(even) {
-    background-color: #ecf0f1;;
+    height: 100vh;
+    /*filter: blur(10px);*/
 }
 
 .container {
     display: flex;
-    max-width: 800px;
+    max-width: 800px; /* Adjust the maximum width as needed */
     width: 100%;
-    background-color: rgba(52, 73, 94, 0.8);
+    background-color: rgba(52, 73, 94, 0.8); /* Background color for the containers with opacity */
     border-radius: 0;
-    overflow: hidden;
+    overflow: hidden; /* Ensures the background image does not overflow the container */
 }
 
 .form-container,
@@ -69,7 +28,7 @@ body {
 }
 
 .form-container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0;
     font-size: 18px;
@@ -78,10 +37,18 @@ body {
 .info-container {
     flex: 2;
     background-color: #ecf0f1;
+    height: 250px;
+    display: flex;
 }
 
+
 h2 {
-    color: #3498db;
+    color: #3498db; /* Blue */
+}
+
+h3,
+p {
+    text-align: left;
 }
 
 label {
@@ -95,12 +62,12 @@ input {
     padding: 8px;
     margin-bottom: 16px;
     box-sizing: border-box;
-    border: 1px solid #3498db;
+    border: 1px solid #3498db; /* Blue */
     border-radius: 4px;
 }
 
 button {
-    background-color: #3498db;
+    background-color: #3498db; /* Blue */
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -110,21 +77,22 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #2980b9; /* Darker Blue */
 }
 
-.username-label {
+.username-label{
     color: #3498db;
     font-size: 12px;
     margin-bottom: 8px;
 }
 
-.header {
+.header{
     background-color: #ffffff;
     margin: 20px;
+
 }
 
-a {
+a{
     color: #3498db;
 }
 
@@ -132,13 +100,14 @@ a:hover {
     color: #0b0e75;
     background-color: transparent;
     text-decoration: underline;
+
 }
 
 ul {
     position: fixed;
     top: 0;
-    right: 0;
-    left: 0;
+    right:0;
+    left:0;
     width: 100%;
 }
 
@@ -162,17 +131,38 @@ li a {
     text-decoration: none;
 }
 
+/* Change the link color to #111 (black) on hover */
 li a:hover {
+    /*background-color: #3498db;*/
     border-color: blue;
 }
 
-#login-link {
-    float: right;
-    margin-right: 20px;
+
+
+.topnav {
+    background-color: #1d2a48;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 20px;
+    height: 50px;
+    padding-bottom: 5px;
+    position: fixed;
+    top: 0; /* Align to the top */
+    z-index: 1000;
 }
 
-#even{
-    color: #1d2a47;
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
 }
 
 .logo {
@@ -180,7 +170,6 @@ li a:hover {
     height: 45px;
     margin-right: 20px;
 }
-
 
 #home-link {
     float: right;
@@ -218,5 +207,3 @@ li a:hover {
     float:right;
     margin-bottom:20px;
 }
-
-

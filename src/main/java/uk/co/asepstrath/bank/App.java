@@ -8,10 +8,10 @@ import io.jooby.helper.UniRestExtension;
 import io.jooby.hikari.HikariModule;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.transactions.TransactionsAPI;
+import uk.co.asepstrath.bank.users.Users;
 import uk.co.asepstrath.bank.webcontrollers.*;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 
 public class App extends Jooby {
 
@@ -38,6 +38,7 @@ public class App extends Jooby {
         Logger log = getLog();
 
         mvc(new AccountController(log));
+        mvc(new ManagerController(log));
         mvc(new HomeController(log));
         mvc(new LoginController(log));
         mvc(new SpendingController(log));
@@ -67,6 +68,7 @@ public class App extends Jooby {
         DatabaseAPI.initDatabase(db);
         AccountsAPI.loadData(log);
         TransactionsAPI.loadData(log);
+        Users.loadUsersFromFile();
     }
 
     /*

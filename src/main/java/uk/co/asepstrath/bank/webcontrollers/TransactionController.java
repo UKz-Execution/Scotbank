@@ -5,6 +5,7 @@ import io.jooby.ModelAndView;
 import io.jooby.annotation.GET;
 import io.jooby.annotation.Path;
 import org.slf4j.Logger;
+import uk.co.asepstrath.bank.users.User;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -23,12 +24,12 @@ public class TransactionController extends WebController {
 
     @GET("")
     public ModelAndView transactionsPage(Context context) {
-
         if (!isLoggedIn(context)) {
             context.sendRedirect("/login");
             return null;
         }
 
+        User user = getCurrentUser(context);
         String time = "16:39";
         String id = "1234456";
         String type = "payment";

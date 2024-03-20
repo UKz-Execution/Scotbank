@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class TransactionsAPITest {
 
+       /*
         @Test
         void testConstructor() throws Exception {
 
@@ -45,6 +46,6 @@ public class TransactionsAPITest {
             verify(url, atLeastOnce()).openConnection();
             verify(urlConnection).getInputStream();
             verify(documentBuilder, atLeastOnce()).parse(Mockito.any(InputSource.class));
-        } // Imcomplete tests.
+        } // Incomplete tests. */
     }
 

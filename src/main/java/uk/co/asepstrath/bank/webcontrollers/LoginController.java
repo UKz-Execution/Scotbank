@@ -1,16 +1,12 @@
 package uk.co.asepstrath.bank.webcontrollers;
 
 import io.jooby.*;
-import io.jooby.annotation.FormParam;
 import io.jooby.annotation.GET;
 import io.jooby.annotation.POST;
 import io.jooby.annotation.Path;
 import org.slf4j.Logger;
-import uk.co.asepstrath.bank.accounts.Account;
-import uk.co.asepstrath.bank.database.DatabaseAPI;
+import uk.co.asepstrath.bank.users.SuperUser;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +27,7 @@ public class LoginController extends WebController {
     }
 
     private ModelAndView createLoginPage(Context context, boolean failedAttempt) {
-        if (getCurrentAccount(context) != null) setCurrentAccount(context, null); // todo : try to limit database lookups
+        logout(context);
 
         Map<String, Object> model = new HashMap<>();
         if (failedAttempt) model.put("invalidCredentials", "Invalid username or password!");
@@ -44,18 +40,12 @@ public class LoginController extends WebController {
 
         String username = context.body().value();
         String password = context.body().value();
-        logger.info("Login request: {username: " + username + ", password: " + password + "}");
+        log("Login request: {username: " + username + ", password: " + password + "}");
 
-        try (DatabaseAPI conn = DatabaseAPI.open()) {
-            for (Account acc : conn.getAllAccounts()) {
-                if (acc.getName().replaceAll("\\s+","").equals(username)) {
-                    setCurrentAccount(context, acc);
-                    context.sendRedirect("/account");
-                    return null;
-                }
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        if (login(context, username, password)) {
+            if (getCurrentUser(context) instanceof SuperUser) context.sendRedirect("/account/manager");
+            else context.sendRedirect("/account");
+            return null;
         }
 
         return createLoginPage(context, true);

@@ -1,16 +1,13 @@
 package uk.co.asepstrath.bank.webcontrollers;
 
 import io.jooby.Context;
-import io.jooby.Session;
 import org.slf4j.Logger;
-import uk.co.asepstrath.bank.accounts.Account;
-import uk.co.asepstrath.bank.database.DatabaseAPI;
-
-import javax.sql.DataSource;
-import java.util.UUID;
+import uk.co.asepstrath.bank.users.SuperUser;
+import uk.co.asepstrath.bank.users.User;
+import uk.co.asepstrath.bank.users.Users;
 
 public class WebController {
-    protected final Logger logger;
+    private final Logger logger;
 
     public WebController() {
         logger = null;
@@ -21,24 +18,28 @@ public class WebController {
     }
 
     protected boolean isLoggedIn(Context context) {
-        return getCurrentAccount(context) != null;
+        return !context.session().get("username").value("").equals("");
     }
 
-    protected Account getCurrentAccount(Context context) {
-        String id = context.session().get("uuid").value("");
-        if (id.equals("")) return null;
-        UUID uuid = UUID.fromString(id);
-        try (DatabaseAPI connection = DatabaseAPI.open()) {
-            return connection.getAccountById(uuid);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return null;
+    protected boolean isSuperUser(Context context) {
+        return getCurrentUser(context) instanceof SuperUser;
     }
 
-    protected void setCurrentAccount(Context context, Account account) {
-        if (account == null) context.session().put("uuid", "");
-        else context.session().put("uuid", account.getId().toString());
+    protected User getCurrentUser(Context context) {
+        String username = context.session().get("username").value("");
+        if (username.equals("")) return null;
+        return Users.getUser(username);
+    }
+
+    protected boolean login(Context context, String username, String password) {
+        User user = Users.getUser(username);
+        if (user == null || !user.isCorrectPassword(password)) return false;
+        context.session().put("username", user.getUsername());
+        return true;
+    }
+
+    protected void logout(Context context) {
+        context.session().put("username", "");
     }
 
     protected void log(String value) {
