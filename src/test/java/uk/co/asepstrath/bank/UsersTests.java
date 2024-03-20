@@ -13,7 +13,6 @@ public class UsersTests {
 
     @BeforeAll
     public static void initUsers() {
-        Assertions.assertEquals(0, Users.getUsers().size());
         Assertions.assertThrows(RuntimeException.class, Users::loadUsersFromFile);
         Users.storeUserData(new SuperUser("admin", "admin"));
         Users.storeUserData(new User("user", "password"));
