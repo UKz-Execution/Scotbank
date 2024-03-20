@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class User {
-    private final String username, password;
-    private final List<Account> accounts;
+    protected final String username, password;
+    protected final List<Account> accounts;
 
     public User(String username, String password) {
         this(username, password, new ArrayList<>());
@@ -46,7 +46,7 @@ public class User {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(username + ",false");
+        StringBuilder builder = new StringBuilder(username + "," + password + ",false");
         for (Account account : accounts) {
             builder.append(",");
             builder.append(account.getId().toString());
