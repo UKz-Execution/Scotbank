@@ -20,10 +20,6 @@ import java.util.UUID;
 import org.slf4j.Logger;
 
 public class TransactionsAPI {
-    public TransactionsAPI() {
-
-    }
-
     public static void loadData(Logger logger) throws ParserConfigurationException, IOException, SAXException {
         int p = 0;
         NodeList nodeList;
@@ -84,7 +80,7 @@ public class TransactionsAPI {
 
             for (Transaction transaction : transactions){
                 connection.createTransaction(transaction);
-                logger.info("Transaction created: {timestamp: " + transaction.getTimestamp() + ", amount: " + transaction.getAmount() + "id: " + transaction.getId() + "from: " + transaction.getFrom() + "to: " + transaction.getTo() + "type: " + transaction.getType());
+                if (logger != null) logger.info("Transaction created: {timestamp: " + transaction.getTimestamp() + ", amount: " + transaction.getAmount() + "id: " + transaction.getId() + "from: " + transaction.getFrom() + "to: " + transaction.getTo() + "type: " + transaction.getType());
             }
 
         } catch (Exception e) {

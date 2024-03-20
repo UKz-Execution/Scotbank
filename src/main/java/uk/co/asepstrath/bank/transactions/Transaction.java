@@ -11,7 +11,8 @@ public class Transaction {
     public String to;
     public String from;
 
-    public Transaction(){
+    public Transaction() {
+
     }
 
     public Transaction (LocalDateTime timestamp, UUID id, String type, BigDecimal amount, String to, String from) {
