@@ -7,6 +7,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import uk.co.asepstrath.bank.database.DatabaseAPI;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,9 +22,9 @@ import org.slf4j.Logger;
 public class TransactionsAPI {
     public TransactionsAPI() {
 
-}
+    }
 
-public static void loadData(Logger logger) throws ParserConfigurationException, IOException, SAXException {
+    public static void loadData(Logger logger) throws ParserConfigurationException, IOException, SAXException {
         int p = 0;
         NodeList nodeList;
         ArrayList<Transaction> transactions = new ArrayList<>();
@@ -31,6 +32,7 @@ public static void loadData(Logger logger) throws ParserConfigurationException, 
             String urlString = "https://api.asep-strath.co.uk/api/transactions?size=1000&page=" + p;
             URL url = new URL(urlString);
             DocumentBuilderFactory doc_build_factory = DocumentBuilderFactory.newInstance();
+            doc_build_factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
             DocumentBuilder doc_build = doc_build_factory.newDocumentBuilder();
             Document doc = doc_build.parse(new InputSource(url.openStream()));
             doc.getDocumentElement().normalize();
