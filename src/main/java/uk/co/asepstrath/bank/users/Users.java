@@ -74,7 +74,7 @@ public class Users {
                         Account account;
                         if ((account = connection.getAccountById(id)) == null) throw new SQLException();
                         accounts.add(account);
-                    } catch (NumberFormatException | SQLException e) {
+                    } catch (SQLException e) {
                         lineValid = false;
                     } catch (Exception e) {
                         throw new RuntimeException(e);

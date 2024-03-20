@@ -1,38 +1,22 @@
 package uk.co.asepstrath.bank;
 
-import io.jooby.*;
+import io.jooby.StatusCode;
 import io.jooby.test.MockContext;
 import io.jooby.test.MockRouter;
-import org.junit.jupiter.api.BeforeEach;
-import io.jooby.test.MockRouter;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
 import uk.co.asepstrath.bank.accounts.Account;
-import uk.co.asepstrath.bank.accounts.Account;
-import uk.co.asepstrath.bank.transactions.Transaction;
-import org.mockito.Mockito;
-import org.slf4j.Logger;
 import uk.co.asepstrath.bank.users.SuperUser;
 import uk.co.asepstrath.bank.users.User;
 import uk.co.asepstrath.bank.users.Users;
-import uk.co.asepstrath.bank.transactions.TransactionsAPI;
 import uk.co.asepstrath.bank.webcontrollers.*;
-import uk.co.asepstrath.bank.database.DatabaseAPI;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static junit.framework.TestCase.assertEquals;
 
 public class ControllerTests {
     MockContext mocked;
@@ -59,7 +43,7 @@ public class ControllerTests {
         mocked.session().put("username", "PhebeLehner");
         mocked.session().put("password", "pass123");
         List<Account> accs = new ArrayList<>();
-        accs.add(new Account());
+        accs.add(new Account(UUID.fromString("d07f1095-46ea-4233-a6f6-6bbe6a6b4a21"), "Phebe Lehner", 149.04, false));
         Users.storeUserData(new User("PhebeLehner","pass123", accs));
 
 
@@ -113,8 +97,8 @@ public class ControllerTests {
 
         mocked.session().put("username", "PhebeLehner");
         mocked.session().put("password", "pass123");
-        List<Account> accs = new ArrayList<Account>();
-        accs.add(new Account());
+        List<Account> accs = new ArrayList<>();
+        accs.add(new Account(UUID.fromString("d07f1095-46ea-4233-a6f6-6bbe6a6b4a21"), "Phebe Lehner", 149.04, false));
         Users.storeUserData(new User("PhebeLehner","pass123", accs));
 
 
@@ -135,8 +119,8 @@ public class ControllerTests {
 
         mocked.session().put("username", "PhebeLehner");
         mocked.session().put("password", "pass123");
-        List<Account> accs = new ArrayList<Account>();
-        accs.add(new Account());
+        List<Account> accs = new ArrayList<>();
+        accs.add(new Account(UUID.fromString("d07f1095-46ea-4233-a6f6-6bbe6a6b4a21"), "Phebe Lehner", 149.04, false));
         Users.storeUserData(new User("PhebeLehner","pass123", accs));
 
 
