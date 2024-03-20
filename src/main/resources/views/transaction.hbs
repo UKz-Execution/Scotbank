@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/style1.css">
     <title>Scotbank - Transaction</title>
+    <style>
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+
+        .scrollable {
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+        </style>
 </head>
 
 <body>
@@ -25,26 +41,34 @@
         <div class="buttons-section">
             <button class = "action-button" onclick = "window.location.href='http://localhost:8080/account';" >Account</button>
             <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction';" >Transactions</button>
-            <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction/transactionDetail';" >Transaction Details</button>
             <button class = "action-button" onclick = "confirmLogout()" >Logout</button>
         </div>
 
-        <div class= "overview">
-            <h3>All Transactions:</h3>
-            <p> Transaction:</p>
-
-            <p> ID: {{id}}</p>
-            <p>   Amount: {{amount}}</p>
-            <p>   To: {{to}}</p>
-            <p>   From: {{from}}</p>
-
-    </div>
+        <div class="container">
+            <div class="info-container scrollable-container">
+               <div class = "overview scrollable">
+                   <form method="post">
+                   <table>
+                     <tr>
+                       <th>ID</th>
+                       <th>Date</th>
+                       <th>Type</th>
+                       <th>From</th>
+                       <th>To</th>
+                       <th>Amount</th>
+                     </tr>
+                     {{{transactionData}}}
+                   </table>
+                   </form>
+               </div>
+            </div>
+        </div>
 </div>
 
 <script>
     function confirmLogout(){
         if(confirm("Are you sure you want to logout?")){
-            window.location.href = "http://localhost:8080/example/home";
+            window.location.href = "http://localhost:8080/login";
         }
         else{
             return false;

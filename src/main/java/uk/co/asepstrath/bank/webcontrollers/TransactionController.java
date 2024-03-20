@@ -4,12 +4,14 @@ import io.jooby.Context;
 import io.jooby.ModelAndView;
 import io.jooby.annotation.GET;
 import io.jooby.annotation.Path;
+import io.jooby.annotation.QueryParam;
 import org.slf4j.Logger;
-import uk.co.asepstrath.bank.users.User;
+import uk.co.asepstrath.bank.database.DatabaseAPI;
+import uk.co.asepstrath.bank.transactions.Transaction;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Path("/transaction")
 public class TransactionController extends WebController {
@@ -30,47 +32,67 @@ public class TransactionController extends WebController {
             return null;
         }
 
-        User user = getCurrentUser(context);
-        String id = "1234456";
-        double amount = 140.00;
-        String to = "Business Account";
-        String from = "Personal Account";
-
-
         Map<String, Object> model = new HashMap<>();
 
-        model.put("id", id);
-        model.put("amount", amount);
-        model.put("to", to);
-        model.put("from", from);
+        StringBuilder builder = new StringBuilder();
+
+        try (DatabaseAPI conn = DatabaseAPI.open()) {
+            for (Transaction transaction : conn.getAllTransactions()) {
+                builder.append("<tr><td><a href=\"/transaction/details?uuid=");
+                builder.append(transaction.getId());
+                builder.append("\">");
+                builder.append(transaction.getId());
+                builder.append("</a></td><td>");
+                builder.append(transaction.getTimestamp().toString());
+                builder.append("</td><td>");
+                builder.append(transaction.getType());
+                builder.append("</td><td>");
+                builder.append(transaction.getFrom());
+                builder.append("</td><td>");
+                builder.append(transaction.getTo());
+                builder.append("</td><td>");
+                builder.append(transaction.getAmount());
+                builder.append("</td></tr>");
+            }
+        } catch (Exception e) {
+            builder.append("<tr><td></td><td></td><td>Error loading data!</td><td></td><td></td><td></td></tr>");
+        }
+
+        model.put("transactionData", builder.toString());
 
         return new ModelAndView("transaction.hbs", model);
     }
 
-    @GET("/transactionDetail")
-    public ModelAndView transactionsDetailsPage(Context context) {
+    @GET("/details")
+    public ModelAndView viewTransaction(Context context, @QueryParam String uuid) {
 
         if (!isLoggedIn(context)) {
             context.sendRedirect("/login");
             return null;
         }
 
-        String id = "1234456";
-        String time = "16:39";
-        double amount = 140.00;
-        String type = "Business";
-        String to = "Business Account";
-        String from = "Personal Account";
-
+        UUID id;
+        try {
+            id = UUID.fromString(uuid);
+        } catch (IllegalArgumentException e) {
+            return transactionsPage(context);
+        }
 
         Map<String, Object> model = new HashMap<>();
 
-        model.put("id", id);
-        model.put("time", time);
-        model.put("amount", amount);
-        model.put("type", type);
-        model.put("to", to);
-        model.put("from", from);
+        try (DatabaseAPI conn = DatabaseAPI.open()) {
+            Transaction transaction = conn.getTransactionById(id);
+            if (transaction == null) return transactionsPage(context);
+            model.put("id", transaction.getId());
+            model.put("time", transaction.getTimestamp().toString());
+            model.put("amount", transaction.getAmount());
+            model.put("type", transaction.getType());
+            model.put("to", transaction.getTo());
+            model.put("from", transaction.getFrom());
+
+        } catch (Exception e) {
+            return transactionsPage(context);
+        }
 
         return new ModelAndView("transactionDetail.hbs", model);
     }
