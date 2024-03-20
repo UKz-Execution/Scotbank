@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/assets/style1.css">
     <title>Scotbank - Account</title>
 </head>
 
@@ -19,26 +19,42 @@
     <a href="http://localhost:8080/home" id = "home-link">Home</a>
 </div>
 
-    <div class="container">
-        <div class="info-container">
-            <h2 id = "welcome">Welcome, {{username}}</h2>
-
-            <div class="buttons-section">
-                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/account';" >Account</button>
-                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction';" >Transactions</button>
-                <button class = "action-button" onclick = "window.location.href='http://localhost:8080/spending';" >Spending Summary</button>
-            </div>
-
-            <div class= "overview">
-                <h3>Account Overview:</h3>
-                <p>Checking account number: {{checkingAccountNumber}}</p>
-                <p>Checking account balance: {{checkingBalance}}</p>
-                <p>Savings account number: {{savingsAccountNumber}}</p>
-                <p>Savings account balance: {{savingsBalance}}</p>
-            </div>
-
-        </div>
+<div class="container">
+    <div class="title">
+        <h2 >Welcome, {{username}}</h2>
     </div>
+
+    <div class="info-container">
+        <div class="buttons-section">
+            <button class = "action-button" onclick = "window.location.href='http://localhost:8080/account';" >Account</button>
+            <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction';" >Transactions</button>
+            <button class = "action-button" onclick = "window.location.href='http://localhost:8080/spending';" >Spending Summary</button>
+
+            <button class = "action-button" onclick = "confirmLogout()" >Logout</button>
+        </div>
+
+        <div class= "overview">
+            <h3>Account Overview:</h3>
+            <p>Checking account number: {{checkingAccountNumber}}</p>
+            <p>Checking account balance: {{checkingBalance}}</p>
+            <p>Savings account number: {{savingsAccountNumber}}</p>
+            <p>Savings account balance: {{savingsBalance}}</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function confirmLogout(){
+        if(confirm("Are you sure you want to logout?")){
+            window.location.href = "http://localhost:8080/example/home";
+        }
+        else{
+            return false;
+        }
+    }
+</script>
+
 </body>
 
 </html>
