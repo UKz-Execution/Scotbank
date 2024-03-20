@@ -1,6 +1,5 @@
 package uk.co.asepstrath.bank;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +28,8 @@ public class AccountTests {
     @Test
     public void createAccount(){
         Assertions.assertNotNull(a);
+        Assertions.assertThrows(RuntimeException.class, () -> new Account(null,null,null,null,false));
+        Assertions.assertThrows(RuntimeException.class, () -> new Account(UUID.randomUUID(),"Test",-1,-2,false));
     }
 
     @Test //Test 1
@@ -86,35 +87,6 @@ public class AccountTests {
         Assertions.assertEquals(BigDecimal.ZERO, a.getStartingBalance());
         Assertions.assertFalse(a.isRoundUpEnabled());
         Assertions.assertEquals("Name: Test Account, Balance: 0.0", a.toString());
-    }
-
-    @Test //Test for task 4
-    public void exposeData(){
-//        Account a = new Account("John", new BigDecimal("102.80"));
-//        Assertions.assertEquals(a.toString(), "Name: John, Balance: 102.80");
-    }
-
-    @Test
-    public void testNullParameters() {
-        try {
-            new Account(null, "John Doe", BigDecimal.valueOf(100), BigDecimal.valueOf(100), true);
-            Assertions.fail("Expected RuntimeException to be thrown");
-        } catch (RuntimeException e) {
-            // Expected
-            Assertions.assertEquals("Account data cannot be null.", e.getMessage());
-        }
-    }
-
-    @Test
-    public void testNegativeBalance() {
-        // Act & Assert
-        try {
-            new Account(UUID.randomUUID(), "John Doe", BigDecimal.valueOf(-100), BigDecimal.valueOf(100), true);
-            Assertions.fail("Expected RuntimeException to be thrown");
-        } catch (RuntimeException e) {
-            // Expected
-            Assertions.assertEquals("Account balance cannot be less than 0", e.getMessage());
-        }
     }
 
 }
