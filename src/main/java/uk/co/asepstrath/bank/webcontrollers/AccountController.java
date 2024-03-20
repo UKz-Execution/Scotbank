@@ -40,19 +40,15 @@ public class AccountController extends WebController {
             String username = account.getName();
             String checkingAccountNumber = account.getId().toString();
             BigDecimal checkingBalance = account.getBalance();
-            String savingsAccountNumber = account.getId().toString();
-            BigDecimal savingsBalance = account.getBalance();
 
             model.put("username", username);
             model.put("checkingAccountNumber", checkingAccountNumber);
             model.put("checkingBalance", checkingBalance);
-            model.put("savingsAccountNumber", savingsAccountNumber);
-            model.put("savingsBalance", savingsBalance);
         }
         return new ModelAndView("account.hbs", model);
     }
 
-    @GET("/manager")
+//    @GET("")
     public ModelAndView managerPage(Context context) {
 
         if (!isLoggedIn(context)) {
@@ -73,7 +69,7 @@ public class AccountController extends WebController {
         model.put("savingsAccountNumber", savingsAccountNumber);
         model.put("savingsBalance", savingsBalance);
         return new ModelAndView("allAccounts.hbs", model);
-}
+    }
 
     public BigDecimal calculateCurrentAmount(double startingAmount, ArrayList<Transaction> transactions, String accountUUID) {
         BigDecimal currentAmount = BigDecimal.valueOf(startingAmount);

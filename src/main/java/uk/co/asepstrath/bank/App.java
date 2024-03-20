@@ -38,6 +38,7 @@ public class App extends Jooby {
         Logger log = getLog();
 
         mvc(new AccountController(log));
+        mvc(new ManagerController(log));
         mvc(new HomeController(log));
         mvc(new LoginController(log));
         mvc(new SpendingController(log));

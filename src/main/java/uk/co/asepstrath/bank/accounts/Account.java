@@ -62,10 +62,6 @@ public class Account {
         return balance;
     }
 
-    public String getAccName() {
-        return name;
-    }
-
     public UUID getId() {
         return id;
     }

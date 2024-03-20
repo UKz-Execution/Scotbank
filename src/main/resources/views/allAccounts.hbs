@@ -4,8 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/style1.css">
+    <link rel="stylesheet" href="/assets/styles.css">
     <title>Scotbank - Managers Account</title>
+    <style>
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+    .scrollable {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    </style>
 </head>
 
 <body>
@@ -20,12 +36,19 @@
 </div>
 
 <div class="container">
-    <div class="info-container">
+    <div class="info-container scrollable-container">
         <h2>Accounts List</h2>
-       <div class = "overview">
-                    <p>Account Number: {{id}}</p>
-                    <p>Account Holder: {{name}}</p>
-                    <p>Balance: {{balance}}</p>
+       <div class = "overview scrollable">
+           <form method="post">
+           <table>
+             <tr>
+               <th>Account Number</th>
+               <th>Account Holder</th>
+               <th>Balance</th>
+             </tr>
+             {{{accountData}}}
+           </table>
+           </form>
        </div>
     </div>
 </div>
@@ -37,7 +60,7 @@
     <script>
         function confirmLogout(){
             if(confirm("Are you sure you want to logout?")){
-                window.location.href = "http://localhost:8080/example/home";
+                window.location.href = "http://localhost:8080/login";
             }
             else{
                 return false;
