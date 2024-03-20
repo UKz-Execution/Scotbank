@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/style1.css">
-    <title>Scotbank - Account</title>
+    <title>Scotbank - Transaction Details</title>
 </head>
 
 <body>
@@ -20,27 +20,25 @@
 </div>
 
 <div id = "acc" class="container">
+
+
     <div class="buttons-section">
         <button class = "action-button" onclick = "window.location.href='http://localhost:8080/account';" >Account</button>
         <button class = "action-button" onclick = "window.location.href='http://localhost:8080/transaction';" >Transactions</button>
         <button class = "action-button" onclick = "window.location.href='http://localhost:8080/spending';" >Spending Summary</button>
-
         <button class = "action-button" onclick = "confirmLogout()" >Logout</button>
     </div>
 
-
-
-
     <div class= "overview">
+        <h3>All Transactions:</h3>
+        <p> Transaction:</p>
+        <p>  ID: {{id}}</p>
+        <p>  Type: {{type}}</p>
+        <p>  time: {{time}}</p>
+        <p>  Amount: {{amount}}</p>
+        <p>  To: {{to}}</p>
+        <p>  From: {{from}}</p>
 
-        <h2>Welcome, {{username}}</h2>
-
-
-        <h3>Account Overview:</h3>
-        <p>Checking account number: {{checkingAccountNumber}}</p>
-        <p>Checking account balance: {{checkingBalance}}</p>
-        <p>Savings account number: {{savingsAccountNumber}}</p>
-        <p>Savings account balance: {{savingsBalance}}</p>
     </div>
 </div>
 
@@ -54,7 +52,6 @@
         }
     }
 </script>
-
 </body>
 
 </html>

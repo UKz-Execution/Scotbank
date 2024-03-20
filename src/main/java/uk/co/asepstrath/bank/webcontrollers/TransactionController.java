@@ -29,22 +29,47 @@ public class TransactionController extends WebController {
             return null;
         }
 
-        String time = "16:39";
         String id = "1234456";
-        String type = "payment";
         double amount = 140.00;
         String to = "Business Account";
         String from = "Personal Account";
 
 
         Map<String, Object> model = new HashMap<>();
-        model.put("time", time);
+
         model.put("id", id);
-        model.put("type", type);
         model.put("amount", amount);
         model.put("to", to);
         model.put("from", from);
 
         return new ModelAndView("transaction.hbs", model);
+    }
+
+    @GET("/transactionDetail")
+    public ModelAndView transactionsDetailsPage(Context context) {
+
+        if (!isLoggedIn(context)) {
+            context.sendRedirect("/login");
+            return null;
+        }
+
+        String id = "1234456";
+        String time = "16:39";
+        double amount = 140.00;
+        String type = "Business";
+        String to = "Business Account";
+        String from = "Personal Account";
+
+
+        Map<String, Object> model = new HashMap<>();
+
+        model.put("id", id);
+        model.put("time", time);
+        model.put("amount", amount);
+        model.put("type", type);
+        model.put("to", to);
+        model.put("from", from);
+
+        return new ModelAndView("transactionDetail.hbs", model);
     }
 }
