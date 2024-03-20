@@ -1,12 +1,15 @@
 package uk.co.asepstrath.bank;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.jooby.helper.UniRestExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class UnitTest {
-    /*
-    Unit tests should be here
-    Example can be found in example/UnitTest.java
-     */
 
-    ///
+    @Test
+    public void testUniRest() {
+        UniRestExtension rest = new UniRestExtension();
+
+        Assertions.assertThrows(Exception.class, () -> rest.install(null));
+    }
 }

@@ -25,7 +25,7 @@ public class DatabaseAPI implements AutoCloseable {
         this.conn = conn;
     }
 
-    public static DatabaseAPI open() { // Unsure if this method is needed, leaving it just in case
+    public static DatabaseAPI open() {
         if (db == null) {
             throw new RuntimeException("Unable to connect to database, app has not started.");
         }
@@ -88,18 +88,6 @@ public class DatabaseAPI implements AutoCloseable {
             prep.setString(5, transaction.getTo());
             prep.setString(6, transaction.getFrom());
             prep.executeUpdate();
-        }
-    }
-
-    public void updateAccountName(Account account) throws SQLException {
-        updateAccountName(account.getId(), account.getName());
-    }
-
-    public void updateAccountName(UUID id, String name) throws SQLException { // Updates name according to account id
-        try (PreparedStatement statement = conn.prepareStatement("UPDATE accounts SET `name` = ? WHERE id = ?")) {
-            statement.setString(1, name);
-            statement.setString(2, id.toString());
-            statement.executeUpdate();
         }
     }
 
