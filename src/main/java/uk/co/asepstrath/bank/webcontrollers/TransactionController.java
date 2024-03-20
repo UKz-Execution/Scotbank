@@ -38,6 +38,7 @@ public class TransactionController extends WebController {
 
         try (DatabaseAPI conn = DatabaseAPI.open()) {
             for (Transaction transaction : conn.getAllTransactions()) {
+                if (!((transaction.getTo() != null && transaction.getTo().equals("e682e7cf-bf6b-4bc3-9716-5b3c19a4638a")) || (transaction.getFrom() != null && transaction.getFrom().equals("e682e7cf-bf6b-4bc3-9716-5b3c19a4638a")))) continue;
                 builder.append("<tr><td><a href=\"/transaction/details?uuid=");
                 builder.append(transaction.getId());
                 builder.append("\">");
